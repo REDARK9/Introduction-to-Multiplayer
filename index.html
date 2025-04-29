@@ -1,0 +1,3685 @@
+<html><head><style>body {
+   color: black;
+}
+</style></head><body><p>⟶ E-BOOK</p>
+<p><img src="_page_0_Picture_1.jpeg" alt=""></p>
+<h1 id="-introduction-to-multiplayer-networking-in-unity-"><strong>Introduction to multiplayer networking in Unity</strong></h1>
+<p><img src="_page_0_Picture_3.jpeg" alt=""></p>
+<p><img src="_page_0_Picture_4.jpeg" alt=""></p>
+<p>© 2024 Unity Technologies</p>
+<h1 id="-contents-"><strong>Contents</strong></h1>
+<table>
+<thead>
+<tr>
+<th>Introduction 7</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>The evolution of Unity tools for multiplayer games 8</td>
+</tr>
+<tr>
+<td>Basic concepts 10</td>
+</tr>
+<tr>
+<td>Headless servers 11</td>
+</tr>
+<tr>
+<td>UDP packets 12</td>
+</tr>
+<tr>
+<td>UDP versus TCP 13</td>
+</tr>
+<tr>
+<td>Ticks and updates 14</td>
+</tr>
+<tr>
+<td>Latency 15</td>
+</tr>
+<tr>
+<td>Other networking terms 16</td>
+</tr>
+<tr>
+<td>Network synchronization 16</td>
+</tr>
+<tr>
+<td>Techniques for network synchronization 17</td>
+</tr>
+<tr>
+<td>Network topologies 17</td>
+</tr>
+<tr>
+<td>Client-server topology 18</td>
+</tr>
+<tr>
+<td>Dedicated game server 18</td>
+</tr>
+<tr>
+<td>Client-hosted listen server 19</td>
+</tr>
+<tr>
+<td>Distributed authority 19</td>
+</tr>
+<tr>
+<td>Local or couch multiplayer 20</td>
+</tr>
+<tr>
+<td>Peer-to-peer (P2P) 20</td>
+</tr>
+<tr>
+<td>What is an authoritative server? 20</td>
+</tr>
+<tr>
+<td>Network stack 21</td>
+</tr>
+<tr>
+<td>Unity networking solutions 23</td>
+</tr>
+<tr>
+<td>Netcode for GameObjects 23</td>
+</tr>
+<tr>
+<td>Netcode for Entities 24</td>
+</tr>
+<tr>
+<td>Unity Transport 25</td>
+</tr>
+<tr>
+<td>Third-party networking 26</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Setting up your first Netcode project 27</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Before you begin 27</td>
+</tr>
+<tr>
+<td>Sample project setup 28</td>
+</tr>
+<tr>
+<td>Installing Netcode for GameObjects 29</td>
+</tr>
+<tr>
+<td>Adding the NetworkManager 30</td>
+</tr>
+<tr>
+<td>NetworkObjects 31</td>
+</tr>
+<tr>
+<td>Player NetworkObjects 32</td>
+</tr>
+<tr>
+<td>Creating a Player NetworkObject 33</td>
+</tr>
+<tr>
+<td>Multiplayer Play Mode 36</td>
+</tr>
+<tr>
+<td>Creating your own UI start buttons 41</td>
+</tr>
+<tr>
+<td>Adding NetworkBehaviour 41</td>
+</tr>
+<tr>
+<td>Authority and ownership properties44</td>
+</tr>
+<tr>
+<td>Sync using a NetworkTransform<br>and NetworkAnimator 45</td>
+</tr>
+<tr>
+<td>Applying client authority 47</td>
+</tr>
+<tr>
+<td>Owner authoritative mode components 49</td>
+</tr>
+<tr>
+<td>Syncing with server authority 49</td>
+</tr>
+<tr>
+<td>Singleton design pattern 53</td>
+</tr>
+<tr>
+<td>Network synchronization 54</td>
+</tr>
+<tr>
+<td>Gameplay mechanic 54</td>
+</tr>
+<tr>
+<td>Define a NetworkVariable 55</td>
+</tr>
+<tr>
+<td>Adding an RPC 57</td>
+</tr>
+<tr>
+<td>Trigger mechanic 59</td>
+</tr>
+<tr>
+<td>RPCs versus NetworkVariables 59</td>
+</tr>
+<tr>
+<td>Designing for multiplayer 60</td>
+</tr>
+<tr>
+<td>Network latency and performance 61</td>
+</tr>
+<tr>
+<td>Simulating latency 61</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Unity Transport Debug Simulator 61</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Network Simulator 62</td>
+<td></td>
+</tr>
+<tr>
+<td>Other network conditioners 63</td>
+<td></td>
+</tr>
+<tr>
+<td>Client-side interpolation 64</td>
+<td></td>
+</tr>
+<tr>
+<td>Client-side prediction and anticipation 65</td>
+<td></td>
+</tr>
+<tr>
+<td>Why server authority 65</td>
+<td></td>
+</tr>
+<tr>
+<td>How client-side prediction works 66</td>
+<td></td>
+</tr>
+<tr>
+<td>Reconciliation and rollback 67</td>
+<td></td>
+</tr>
+<tr>
+<td>Client-side anticipation in Netcode<br>for GameObjects 68</td>
+<td></td>
+</tr>
+<tr>
+<td>Deterministic physics 70</td>
+<td></td>
+</tr>
+<tr>
+<td>Client-side prediction in Netcode for Entities 70</td>
+<td></td>
+</tr>
+<tr>
+<td>Testing and debugging networked games 73</td>
+<td></td>
+</tr>
+<tr>
+<td>Local testing 73</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Player builds 73</td>
+<td></td>
+</tr>
+<tr>
+<td>Multiplayer Play Mode (MPPM) 74</td>
+<td></td>
+</tr>
+<tr>
+<td>macOS users 74</td>
+<td></td>
+</tr>
+<tr>
+<td>Simulating network conditions 74</td>
+<td></td>
+</tr>
+<tr>
+<td>Testing client connections 75</td>
+<td></td>
+</tr>
+<tr>
+<td>Clients connecting 75</td>
+<td></td>
+</tr>
+<tr>
+<td>Clients disconnecting 75</td>
+<td></td>
+</tr>
+<tr>
+<td>Host/Server starting the session 75</td>
+<td></td>
+</tr>
+<tr>
+<td>Host/Server shutting down 75</td>
+<td></td>
+</tr>
+<tr>
+<td>Techniques for debugging multiplayer games 76</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Multiplayer Services 78</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Matchmaker 79</td>
+</tr>
+<tr>
+<td>Lobby 80</td>
+</tr>
+<tr>
+<td>Relay 80</td>
+</tr>
+<tr>
+<td>Multiplay Hosting 81</td>
+</tr>
+<tr>
+<td>Vivox 81</td>
+</tr>
+<tr>
+<td>Sample projects and resources 82</td>
+</tr>
+<tr>
+<td>Resources for Netcode for GameObjects 82</td>
+</tr>
+<tr>
+<td>Unity Learn: Get started with Netcode<br>for GameObjects 82</td>
+</tr>
+<tr>
+<td>Bitesize samples 84</td>
+</tr>
+<tr>
+<td>Boss Room 85</td>
+</tr>
+<tr>
+<td>Small Scale Competitive Multiplayer template 86</td>
+</tr>
+<tr>
+<td>VR Multiplayer template 88</td>
+</tr>
+<tr>
+<td>Resources for Netcode for Entities 89</td>
+</tr>
+<tr>
+<td>Getting started with Netcode for Entities 89</td>
+</tr>
+<tr>
+<td>ECS Netcode samples 89</td>
+</tr>
+<tr>
+<td>ECS Network Racing 90</td>
+</tr>
+<tr>
+<td>Megacity Metro 90</td>
+</tr>
+<tr>
+<td>Experimental Multiplayer Services package 91</td>
+</tr>
+<tr>
+<td>Next steps 92</td>
+</tr>
+</tbody>
+</table>
+<h1 id="-span-id-page-5-0-span-introduction"><span id="page-5-0"></span>Introduction</h1>
+<p>When people get together in an online game, something extraordinary happens. That simple racing game or RPG transforms into a shared experience. What happens there can be unpredictable, challenging, and, most of all, fun.</p>
+<p>Whether we are teaming up against an interstellar saboteur or dueling in an online shooter, networked multiplayer gaming allows us to collaborate and compete beyond physical boundaries. This collective interaction is what defines the multiplayer experience.</p>
+<p>Developing networked gameplay, however, can be more complex than creating an equivalent single-player application.</p>
+<p>The aim of this guide is to help you get started with developing multiplayer games using Unity&#39;s network tools. It provides a foundational knowledge of networking concepts and serves as a primer before you dive into the Unity network samples. It also walks you through a basic use case with the <a href="https://assetstore.unity.com/packages/essentials/starter-assets-thirdperson-updates-in-new-charactercontroller-pa-196526">Starter Assets – ThirdPerson</a> package available on The Unity Asset Store.</p>
+<p>This guide assumes you are familiar with Unity and C# development but may be new or just getting started with networking. It&#39;s designed to help you quickly understand the theoretical aspects of multiplayer development and prepare you for the practical demos.</p>
+<p>This e-book will:</p>
+<ul>
+<li>Explore the core concepts of Unity multiplayer</li>
+<li>Explore different multiplayer systems and networking models</li>
+<li>Set up a simple example using Netcode for GameObjects</li>
+</ul>
+<h1 id="-span-id-page-6-0-span-the-evolution-of-unity-tools-for-multiplayer-games"><span id="page-6-0"></span>The evolution of Unity tools for multiplayer games</h1>
+<p>Unity provides a number of multiplayer development tools and solutions. These include the <a href="https://docs.unity3d.com/Packages/com.unity.netcode.gameobjects@2.1/manual/index.html">Netcode for GameObjects</a> and <a href="https://docs.unity3d.com/Packages/com.unity.netcode@1.4/manual/index.html">Netcode for Entities</a> frameworks, alongside <a href="https://docs.unity.com/ugs/en-us/manual/overview/manual/unity-gaming-services-home">Unity Gaming</a>  <a href="https://docs.unity.com/ugs/en-us/manual/overview/manual/unity-gaming-services-home">Services</a> (UGS), which features <a href="https://docs.unity.com/ugs/en-us/manual/game-server-hosting/manual/welcome-to-multiplay">Game Server Hosting (Multiplay)</a> and <a href="https://docs.unity.com/ugs/en-us/manual/vivox-unity/manual/Unity/Unity">Vivox</a> for voice and text chat. Whether you&#39;re building a casual co-op or an open-world MMO, Unity can help you hit the ground running with multiplayer development.</p>
+<p><a href="https://unity.com/blog/unity-6-features-announcement">Unity 6</a> brings new and improved features for multiplayer games that make integration, iteration, and deployment more reliable and faster than ever. Here&#39;s a brief look at what&#39;s new in Unity 6 for multiplayer games:</p>
+<ul>
+<li><strong><a href="https://docs.unity3d.com/6000.0/Documentation/Manual/multiplayer-center.html">Multiplayer Center</a></strong>: Available as a core package in Unity 6, the Multiplayer Center makes it easier to set up and develop multiplayer games. New prompts and workflows use parameters and requirements for your game to suggest relevant packages and services before generating dynamic templates you can use to start your project.</li>
+<li><strong><a href="https://docs.unity3d.com/Packages/com.unity.multiplayer.widgets@1.0/manual/get-started-learn-widgets.html">Multiplayer widgets</a></strong>: Multiplayer widgets help you to integrate Unity Gaming Services (UGS) into your multiplayer game. You can access the widgets as a standalone package, or from the Multiplayer Center.</li>
+<li><strong><a href="https://docs-multiplayer.unity3d.com/tools/current/install-tools/index.html">Multiplayer Tools package</a></strong>: This package improves workflows for multiplayer game development in Unity, performance with Netcode for GameObjects 2.0, and adds support for Distributed Authority.</li>
+<li><strong><a href="https://docs-multiplayer.unity3d.com/mppm/current/about/index.html">Multiplayer Play Mode</a></strong>: This package streamlines your process for validating gameplay by launching up to four independent, lightweight editor processes from the same assets on disk. For the most ambitious server-hosted projects, Play Mode Scenarios allows you</li>
+</ul>
+<p><img src="_page_7_Picture_0.jpeg" alt=""></p>
+<p>to configure deployment steps, including the build of your dedicated server, and its upload straight to your Multiplay Hosting servers.</p>
+<ul>
+<li><strong><a href="https://docs.unity3d.com/Packages/com.unity.dedicated-server@1.3/manual/index.html">Distributed Authority (beta)</a></strong>: Distributed Authority, in beta as of November 2024, is available to use with Netcode for GameObjects. This package gives clients distributed ownership of authority over spawned NetcodeObjects during a game session. The netcode simulation workload is distributed across clients, while the network state is coordinated through a high-performance cloud backend which Unity provides.</li>
+<li><strong><a href="https://docs.unity.com/ugs/en-us/manual/mps-sdk/manual">Multiplayer Services SDK</a></strong>: This SDK is a one-stop solution for adding multiplayer elements to a game developed in Unity 6. The Unity Gaming Services (UGS) <a href="https://unity.com/solutions/build-backend#multiplayer">Multiplayer</a> services like Relay, Matchmaker, and more, powers these capabilities to define how groups of players interact in your games through Sessions, which work with either the Netcode for GameObjects or the Netcode for Entities networking libraries.</li>
+</ul>
+<p>Check out these resources to learn more about Unity 6 multiplayer solutions:</p>
+<ul>
+<li><a href="https://www.youtube.com/watch?v=-B8D9edqY1I">Unite 2024: Accelerating the creation of the your competitive multiplayer game</a></li>
+<li><a href="https://www.youtube.com/watch?v=UiAhrW8i7oA">Unite 2024: Going multiplayer: How to help your studio and game thrive</a></li>
+<li><a href="https://docs.unity3d.com/Manual/WhatsNewUnity6.html#multiplayer">Unity Manual: New in Multiplayer in Unity 6</a></li>
+<li><a href="https://unity.com/blog/unity-6-features-announcement">Unity 6 is here: See what&#39;s new</a></li>
+</ul>
+<p>Unity&#39;s suite of tools supports the entire multiplayer game development lifecycle, from concept and prototyping to launch and ongoing operations. Work entirely within the Unity ecosystem or select the tools and services that best match the needs of your team.</p>
+<h1 id="-span-id-page-8-0-span-basic-concepts"><span id="page-8-0"></span>Basic concepts</h1>
+<p>In multiplayer gaming, networking enables players to connect to a central server or directly to each other. This allows them to share data and play together in real-time. The same game application runs simultaneously on each player&#39;s device, and each player&#39;s actions are then synchronized across the network.</p>
+<p><img src="_page_8_Figure_2.jpeg" alt=""></p>
+<p>In networked multiplayer, the same game application runs across multiple devices.</p>
+<p><span id="page-9-0"></span>A typical networked game consists of two main components in its architecture, <strong>clients</strong> and <strong>servers</strong>. Clients are the instances of the game running on players&#39; devices – PCs, consoles, or mobile phones. Clients render the game graphics, play the audio, handle user input, and send updates to the server about the player&#39;s actions.</p>
+<p>Servers, on the other hand, manage the game state, the current status of all the elements in the game. They handle communication between clients and enforce the game&#39;s rules. Servers can be dedicated, <a href="#page-16-1">headless machines</a> run by the game developers or they can be playerhosted, where one of the players also acts as the server.</p>
+<p><img src="_page_9_Figure_3.jpeg" alt=""></p>
+<p>The server receives inputs from clients, processes game logic, and sends updates back to clients. Although the server is the final authority on the game state, clients maintain local copies for responsive gameplay. Constant synchronization then keeps the game as consistent as possible for all players in real-time.</p>
+<p>The client-server architecture</p>
+<h4 id="-headless-servers-"><strong>Headless servers</strong></h4>
+<p>A headless server is a server that operates without a graphical user interface, focusing solely on backend tasks.</p>
+<p>Because they don&#39;t render graphics, they can scale more easily and are often deployed on dedicated hardware or cloud environments. For more information, see <strong>Dedicated game server</strong> under <strong>Network Topologies</strong>.</p>
+<p><span id="page-10-0"></span><img src="_page_10_Picture_0.jpeg" alt=""></p>
+<h1 id="udp-packets">UDP packets</h1>
+<p>Clients and servers communicate by exchanging data packets using standard Internet protocols like <a href="https://en.wikipedia.org/wiki/User_Datagram_Protocol">UDP (User Datagram Protocol).</a> In real-time applications, especially fast-paced games like first-person shooters, UDP is preferred to TCP (Transmission Control Protocol) because it gives full control to the game to prioritize different aspects of the communication. Unlike TCP, UDP does not require acknowledgement from the recipient. This makes UDP a more efficient and flexible foundation but it also puts the burden on the application to handle cases when such functionality is required.</p>
+<p>Each UDP packet consists of a <strong>header</strong> and a <strong>payload</strong>. The UTP payload contains additional protocol-specific sections, each with their own headers and payloads. In networking terminology, this nesting is known as <strong>encapsulation</strong>.</p>
+<table>
+<thead>
+<tr>
+<th>[IP Header]<br>Source IP: 192.168.0.10<br>Destination IP: 192.168.0.20</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>[UDP Header]<br>Source Port: 5000<br>Destination Port: 7777</td>
+<td></td>
+</tr>
+<tr>
+<td>[Netcode for GameObjects Header]</td>
+<td></td>
+</tr>
+<tr>
+<td>Protocol ID: 0×4E4654 (NGO)<br>Sequence Number: 1234<br>Remote ID: 5678<br>Type: Data</td>
+<td></td>
+</tr>
+<tr>
+<td>[Payload]</td>
+<td></td>
+</tr>
+<tr>
+<td>GameObject Updates:<br>- GameObject ID: 1001<br>- Transform:<br>- Position: (10.0, 20.0, 30.0)<br>- Rotation: (0.0, 45.0, 90.0)<br>- Player:<br>- Health: 80<br>- GameObject ID: 1002</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>The IP and UDP headers are of a fixed size and contain important metadata like the address of the sender and receiver (IP address and ports). The payload varies in size, structure, and content, depending on the specific game and context. For example, a payload could carry player inputs or a snapshot of the game state at one moment in time.</p>
+<p>Simplification of a UDP packet</p>
+<p>UDP packets favor low latency and speed, essential for real-time applications; however, this speed comes with a lack of reliability as a tradeoff. The UDP protocol doesn&#39;t provide any mechanisms for reliability, ordering, or congestion control. A packet traveling through the internet could experience errors, including:</p>
+<p>— <strong>Packet Loss:</strong> Sometimes a packet may get lost and never arrive at its destination. This could be due to network congestion, faulty hardware, or other issues.</p>
+<p><span id="page-11-0"></span><img src="_page_11_Picture_0.jpeg" alt=""></p>
+<ul>
+<li><strong>Duplication:</strong> A packet might be duplicated, resulting in the same packet arriving multiple times at the receiver. This can happen due to misconfigured network hardware or software.</li>
+<li><strong>Reordering:</strong> Packets may arrive at the receiver in a different order than they were sent. This can happen if packets take different routes to the destination that have varying latencies.</li>
+<li><strong>Corruption:</strong> Packet contents may get altered during transmission, resulting in unusable data.</li>
+</ul>
+<h4 id="-udp-versus-tcp-"><strong>UDP versus TCP</strong></h4>
+<p>A <strong>network protocol</strong> is a set of rules and conventions that govern how data is transmitted and received over a network. Protocols define how to establish connections, format messages, handle errors, and transmit data.</p>
+<p>UDP is typically preferred over <a href="https://en.wikipedia.org/wiki/Transmission_Control_Protocol">Transmission Control Protocol (TCP)</a> in game development due to its fast and lightweight nature. TCP, while reliable and suitable for web browsing, ensures ordered data delivery by retransmitting lost or out-of-order packets; this can introduce lag or stutter that don&#39;t make it suitable for real-time gaming.</p>
+<p>In contrast, UDP accepts some data loss to prioritize real-time performance. This means that games can run smoothly at 60 fps or higher without freezing, even if dropping some non-critical data. UDP usually strikes a better balance between responsiveness and occasional data loss, making it ideal for networked multiplayer games.</p>
+<p>The following techniques can mitigate UDP&#39;s unreliability. Unlike the built-in functionality in TCP, they can be fine-tuned for use in real-time games.</p>
+<table>
+<thead>
+<tr>
+<th>Technique</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Sequence numbers</td>
+<td>Each packet has a unique, increasing sequence<br>number. The receiver uses this to detect missing or<br>out-of-order packets.</td>
+</tr>
+<tr>
+<td>Acknowledgement (ACK) and<br>ACK bitmasks</td>
+<td>Packets include the sequence number of the last<br>received packet, letting the sender know which<br>packets have been delivered. An ACK bitmask tracks<br>the status of multiple packets at once, allowing for<br>quicker detection of lost packets.</td>
+</tr>
+<tr>
+<td>Retransmission timeout<br>adjustment (RTO)</td>
+<td>This is a technique that makes use of measuring<br>round trip time in TCP approximation. For example,<br>you can measure the round trip time and then use<br>it to adjust client-side interpolation or client-side<br>prediction.</td>
+</tr>
+<tr>
+<td>Timeouts</td>
+<td>If an acknowledgment isn&#39;t received within a certain<br>period, the packet is considered lost.</td>
+</tr>
+</tbody>
+</table>
+<p><span id="page-12-0"></span><img src="_page_12_Picture_0.jpeg" alt=""></p>
+<h1 id="ticks-and-updates">Ticks and updates</h1>
+<p>In a multiplayer game, the server handles the core game logic, physics simulations, and other gameplay functions, even if it doesn&#39;t have a display.</p>
+<p>As the server is only handling the global game state, it takes its input from the clients, much like a single-player game handles inputs from a local player. Instead of having a mouse and keyboard, the server processes those inputs to maintain the &quot;authoritative game state&quot; – this includes everything from current player positions and object states to physics calculations and game progress.</p>
+<p>The heart of server-side processing is the <strong>server tick</strong>. A server tick is a cycle during which the server updates the game state based on received inputs. This happens at a fixed interval known as the tick rate, measured in Hertz (Hz) or ticks per second. This tick rate determines the frequency at which the game world is updated.</p>
+<p>Conversely, the <strong>update rate</strong> refers to how frequently the client exchanges data with the server. A higher update rate can enhance the responsiveness of the game but requires more bandwidth and processing power. It&#39;s typically constrained by the client&#39;s network capabilities and computing resources.</p>
+<p><img src="_page_12_Figure_7.jpeg" alt=""></p>
+<p>Tick rate versus update rate</p>
+<p>A higher tick rate can improve the game&#39;s responsiveness but may strain server resources. Similarly, a higher update rate enhances interaction smoothness at the expense of greater data transmission. Creating a smooth and responsive multiplayer experience hinges on finding</p>
+<p><span id="page-13-0"></span><img src="_page_13_Picture_0.jpeg" alt=""></p>
+<p>the right balance between the tick rate and the update rate.</p>
+<p>The actual tick rate can vary based on gameplay needs. A fast-paced first person shooter often runs at tick rates of 60 Hz or higher to reflect fast player movements and split-second shots. A real-time strategy game, on the other hand, doesn&#39;t rely on twitch reflexes, so a tick rate of 30 Hz may be sufficient. Meanwhile, a large-scale strategy MMO might use a fairly low tick rate of 10 Hz in order to support an extensive number of concurrent players.</p>
+<h2 id="latency">Latency</h2>
+<p>Latency is the time it takes for data to travel from the source to the destination. <strong>Round-trip time (RTT)</strong> measures how long it takes for a packet to travel to its destination and return with a response, providing a gauge of network latency.</p>
+<p>While subjective, a general rule of thumb is that users notice gameplay degradation around 200ms of latency. Different types of games can tolerate more or less latency. For example, first-person shooter games perform best with less than 100ms of latency, whereas real-time strategy games might allow higher latency values of up to 500 ms.</p>
+<p><img src="_page_13_Figure_7.jpeg" alt=""></p>
+<p>Round-trip time is a gauge of network latency.</p>
+<p>Lower latency produces a responsive experience for the player. Ideally, there is minimal delay between a user&#39;s action and seeing the expected result in a multiplayer game. High latency leads to noticeable delays during gameplay.</p>
+<p>Sometimes latency results from non-network components. For example, there may be a delay in detecting user input or a hiccup in the render pipeline. Another culprit is <a href="https://docs.unity3d.com/6000.0/Documentation/ScriptReference/QualitySettings-vSyncCount.html">Vsync:</a> Though this feature can stop screen tearing, it does so at the cost of additional latency.</p>
+<p>More often, the network itself is the major source of latency. It can involve several types of delays:</p>
+<p>— <strong>Processing delay:</strong> Routers take time to read packet headers and forward packets to their destination. Though usually minimal, this delay can accumulate across multiple hops.</p>
+<p><span id="page-14-0"></span><img src="_page_14_Picture_0.jpeg" alt=""></p>
+<ul>
+<li><strong>Transmission delay:</strong> This is the time required to put packets onto the network, directly affected by packet size. This is more apparent on end-user networks with lower bandwidth.</li>
+<li><strong>Queueing delay:</strong> When packets are held in queues due to congestion or limited interface capacity, this delay can significantly increase latency.</li>
+<li><strong>Propagation delay:</strong> Signals take time to travel across the network. This type of delay results primarily from the physical distance between servers and users, the physical media (fiber, copper, air) and type of signal (electrical, optical, radio wave).</li>
+</ul>
+<p>While some latency is unavoidable, especially in internet-based games, there are many techniques (e.g., <a href="https://docs-multiplayer.unity3d.com/netcode/current/advanced-topics/client-anticipation/">anticipation,</a> <a href="https://docs.unity3d.com/Packages/com.unity.netcode@1.2/manual/prediction.html">prediction</a>, <a href="https://docs-multiplayer.unity3d.com/netcode/current/learn/clientside_interpolation/">interpolation)</a> to minimize its impact. We&#39;ll examine a few of these later.</p>
+<h4 id="-other-networking-terms-"><strong>Other networking terms</strong></h4>
+<p>Here are some other terms that you may encounter when discussing latency:</p>
+<p><strong>Ping:</strong> This involves sending and receiving back a basic message to gauge network responsiveness. Think of it as a simplified version of Round Trip Time (RTT).</p>
+<p><strong>Jitter:</strong> This is the variation in RTT due to fluctuating network conditions, which can affect latency mitigation and cause packets to arrive out of order.</p>
+<p><strong>Bandwidth:</strong> This is the amount of data that can be transmitted over a network in a given amount of time. Higher bandwidth can be important for games that need to transmit large amounts of state data.</p>
+<p>You can find these terms and more in this glossary page of <a href="https://docs-multiplayer.unity3d.com/netcode/current/terms-concepts/mtt-terms/">Multiplayer Networking</a>  <a href="https://docs-multiplayer.unity3d.com/netcode/current/terms-concepts/mtt-terms/">Terminology</a>.</p>
+<h2 id="network-synchronization">Network synchronization</h2>
+<p>To stay in sync, clients and the server continuously exchange messages in order to maintain a consistent game state across all players. Typically, clients usually send user commands to the server at a high frequency – often at 60 Hz, or about every 16 milliseconds. These commands might be actions or inputs; for example, mouse or gamepad movements or button presses for jumping and shooting.</p>
+<p>Once the server receives and processes the client commands, it then sends updates about the game world back to the clients. The faster the game reacts to player input, the more responsive it feels.</p>
+<p>Just bear in mind that the server&#39;s tick rate, the client&#39;s update rate, and the client&#39;s frame rate serve different purposes and don&#39;t need to match. In fact, achieving perfect synchronization is uncommon. A server and its clients are constantly in flux, exchanging a continuous stream of dynamic data. The objective is to reduce their discrepancies, thereby creating the illusion that all clients are playing in unison.</p>
+<p><span id="page-15-0"></span><img src="_page_15_Picture_0.jpeg" alt=""></p>
+<h3 id="-techniques-for-network-synchronization-"><strong>Techniques for network synchronization</strong></h3>
+<p><strong>State synchronization</strong> involves the periodic transmission of the state of network objects from the server to the clients. How frequently these game updates happen can vary based on the specific needs of the game genre (e.g. a competitive shooter versus a co-op strategy game).</p>
+<p><strong>Remote procedure calls (RPCs)</strong> invoke functions on the server or other clients remotely. Use RPCs for client-to-server communication, such as sending player inputs, requesting specific actions, or triggering one-time game events.</p>
+<p><strong>Bandwidth management</strong> can significantly impact performance. Synchronization consumes bandwidth, so implement strategies like the following to reduce data transmission over the network:</p>
+<ul>
+<li><strong>Data culling:</strong> This reduces network traffic by excluding non-essential updates, focusing only on what is necessary for gameplay. For instance, you can sync only critical axes of movement or trigger VFX and animations locally using events instead of continuously synchronizing them. Any reduction in network traffic can enhance game performance.</li>
+<li><strong>Delta compression</strong>: This also goes by the term <a href="https://en.wikipedia.org/wiki/Delta_encoding">delta encoding.</a> It allows the server to send only the changes (deltas) since the last update. Clients then apply only these deltas to their local game state to keep it in sync with the server.</li>
+<li><strong>Interest management</strong>: This prioritizes data synchronization based on several criteria. <a href="https://docs-multiplayer.unity3d.com/netcode/current/terms-concepts/mtt-terms/#spatial-relevance">Spatial relevance</a> determines the priority of objects based on their distance from the player and their visibility. <a href="https://docs-multiplayer.unity3d.com/netcode/current/terms-concepts/mtt-terms/#age-staleness">Age (or staleness)</a> prioritizes objects or data that haven&#39;t been transmitted recently, making them higher-priority until updated. <a href="https://docs-multiplayer.unity3d.com/netcode/current/terms-concepts/mtt-terms/#interaction">Interaction</a> focuses on objects that have recently interacted with the player or are likely to do so soon.</li>
+</ul>
+<p>These techniques can help you optimize network performance, ensuring a smoother and more efficient gameplay experience.</p>
+<h2 id="network-topologies">Network topologies</h2>
+<p>Simply put, a network topology defines how devices are connected and communicate in a multiplayer environment. Each network model has its own advantages and disadvantages. Choosing one depends on the type of game, the desired level of control over the game state, and the resources available for server infrastructure.</p>
+<p>Topologies can impact the game&#39;s architecture, performance, and the overall player experience. Netcode for GameObjects supports two primary topologies: <a href="https://docs-multiplayer.unity3d.com/netcode/current/tutorials/get-started-ngo/">client-server</a> and <a href="https://docs-multiplayer.unity3d.com/netcode/current/learn/distributed-authority-quick-start/">distributed authority</a>. Let&#39;s unpack what that means.</p>
+<p><span id="page-16-0"></span><img src="_page_16_Picture_0.jpeg" alt=""></p>
+<h4 id="-client-server-topology-"><strong>Client-server topology</strong></h4>
+<p>The client-server topology is a common network model that divides responsibilities between client devices and a central server to optimize performance and manage the game effectively.</p>
+<p>A <strong>client</strong> represents a player&#39;s game instance, handling local inputs, rendering, and partial simulation of the game state. Clients send local inputs like character movements to the server and receive updates in return.</p>
+<p>The <strong>server</strong> maintains the definitive, accurate representation of the game world, processing player inputs and enforcing game rules. This central server resolves conflicts and validates actions, ensuring a consistent and fair experience for all players. This setup also helps prevent cheating by controlling game state centrally.</p>
+<p>Clients and servers can communicate with each other over the internet or a local area network (LAN). Offline LAN games connect multiple devices within the same physical vicinity through a local network without needing internet access. This setup bypasses the internet and ensures minimal latency, high security, and reliable connectivity due to the close proximity of the devices. This makes it suitable for LAN parties, esports tournaments, and environments where the internet is unstable.</p>
+<p>There are two types of servers within the client-server topology:</p>
+<h4 id="-span-id-page-16-1-span-dedicated-game-server"><span id="page-16-1"></span>Dedicated game server</h4>
+<p>A <strong>dedicated game server</strong> is a separate entity that only processes data and doesn&#39;t participate as a player. It can offer the highest performance while handling all major simulations and player interactions in networked games.</p>
+<p><img src="_page_16_Figure_10.jpeg" alt=""></p>
+<p>Dedicated servers are integral for games where minimizing cheating is paramount. However, this setup can introduce communication latency as all player state changes need to be processed by the server before being relayed to other clients.</p>
+<p>Dedicated servers are particularly well-suited for performance-sensitive, competitive games such as first-person shooters. They can be essential to maintaining fairness and reducing disruptive behavior.</p>
+<p>A dedicated game server handles all major game simulations.</p>
+<p><span id="page-17-0"></span><img src="_page_17_Picture_0.jpeg" alt=""></p>
+<h3 id="client-hosted-listen-server">Client-hosted listen server</h3>
+<p>A <strong>client-hosted listen server</strong> acts as both server and client, allowing the host to play the game. This can help reduce costs but gives the host a latency advantage (since no packets need to be sent across the network).</p>
+<p><img src="_page_17_Figure_4.jpeg" alt=""></p>
+<p>This setup often results in degraded server performance since the same machine is tasked with running the game server and generating the visual output for the host player. Also, because the hosting client services connections via a residential internet connection, it can be slower than using a dedicated server in a remote data center. This is because residential internet service providers typically prioritize download performance over upload performance.</p>
+<p>A client-hosted listen server acts as both a server and client.</p>
+<h4 id="-distributed-authority-"><strong>Distributed authority</strong></h4>
+<p>The <strong>distributed authority</strong> network model decentralizes control and management of game state among all participating clients. Each client is responsible for owning, tracking, and managing a portion of the state of objects within the game, with the ability to spawn and manage these objects autonomously.</p>
+<p>A central, lightweight service monitors changes in object states and manages the routing of network traffic, but it does not simulate the game itself.</p>
+<p>This topology offers several benefits, including reduced costs and lower input latency, as it eliminates the need for a central server to process all game actions and reduces network round-trips since each client is authoritative over its own objects. For example, that means it can handle actions like movement, attacks, or other game inputs locally without waiting for permission from a server. This results in more immediate feedback for the player, which in turn makes the game feel more responsive. However, it also can be subject to increased vulnerability to cheating as there&#39;s no single authoritative server to validate all actions.</p>
+<p>Distributed authority is less suitable for games requiring precise simulations or high competitiveness but works well for games with less critical interaction needs.</p>
+<p><span id="page-18-0"></span><img src="_page_18_Picture_1.jpeg" alt=""></p>
+<p>You can learn more about Unity&#39;s new Distributed Authority package (beta) for Netcode for GameObjects in <a href="https://www.youtube.com/watch?v=3jBOTk_qozA">this Unite 2024</a>  <a href="https://www.youtube.com/watch?v=3jBOTk_qozA">session</a>.</p>
+<p>The distributed authority model decentralizes control and game management.</p>
+<h3 id="-local-or-couch-multiplayer-"><strong>Local or couch multiplayer</strong></h3>
+<p>Local multiplayer games use a single client runtime instance that can be played by two or more people on the same screen in the same physical location. This setup is ideal for social gaming scenarios, offering direct interaction among players without any need for networking. It&#39;s popular in party games and co-op modes, providing a straightforward way for friends and family to play together.</p>
+<h3 id="-peer-to-peer-p2p-"><strong>Peer-to-peer (P2P)</strong></h3>
+<p>Each device functions as both client and server, allowing for direct connections between players. This resembles distributed authority but disposes of the lightweight server altogether. This method helps reduce the need for centralized servers, lowering costs and complexity. However, it can introduce challenges in ensuring fairness and consistent latency, as there is no central authority to manage game state and security.</p>
+<h4 id="-what-is-an-authoritative-server-"><strong>What is an authoritative server?</strong></h4>
+<p>An authoritative server refers to a server setup that is the central controller of game states and logic. As the name implies, it&#39;s the final authority in a networked game.</p>
+<p>Rather than splitting authority of what is happening in the game across the player machines, an authoritative server runs the full game simulation itself and dictates what is happening in the game. Clients simply send their inputs to the server, which then updates the game and sends back the latest game state.</p>
+<p>The server also enforces game rules and resolves conflicts. Authoritative servers are one of the simplest ways to implement networked game logic and the one least prone to exploitation by cheaters, ensuring a uniform experience for everyone playing the game.</p>
+<h1 id="-span-id-page-19-0-span-network-stack"><span id="page-19-0"></span>Network stack</h1>
+<p>A <a href="https://en.wikipedia.org/wiki/Protocol_stack">protocol stack,</a> or network stack, is generally speaking software that implements various communication protocols to enable data transmission across networks. It&#39;s organized like a layered cake:</p>
+<p><img src="_page_19_Figure_3.jpeg" alt=""></p>
+<p>The Network stack (source: <a href="https://en.wikipedia.org/wiki/Protocol_stack">Wikipedia</a>)</p>
+<p>Each layer only interacts with the layers directly above and below it, providing modularity and simplifying network management.</p>
+<p><strong>Application layer:</strong> The high-level of the stack where most Unity development takes place. Packages like Netcode for GameObjects or Netcode for Entities abstract away the complexities of lower-level networking, allowing developers to focus on implementing multiplayer functionality.</p>
+<p><strong>Transport layer:</strong> The transport layer is responsible for providing reliable data transfer, error detection and correction, flow control, and ensuring end-to-end communication between devices in a network. It facilitates the segmentation and reassembly of data packets and provides mechanisms for error recovery and data integrity.</p>
+<p><strong>Network layer:</strong> The network layer is responsible for routing data packets between networked devices across different networks. It relies on the network infrastructure and protocols, such as IP (Internet Protocol), to handle communication.</p>
+<p><img src="_page_20_Picture_0.jpeg" alt=""></p>
+<p><strong>Data link and physical layers:</strong> These layers directly handle physical transmission of data packets over the network medium, such as Ethernet or Wi-Fi. The data link layer and physical layers are typically handled by the operating system and network hardware.</p>
+<p>As a Unity developer, you&#39;ll primarily work with the high-level application layer to implement multiplayer features, such as synchronizing GameObjects, managing game state, and handling player interactions.</p>
+<p>Generally, you won&#39;t need to worry about the lower layers unless your application has specific requirements. This simplifies the network stack to something that looks like this:</p>
+<p><img src="_page_20_Figure_5.jpeg" alt=""></p>
+<p>Netcode development layers</p>
+<h1 id="-span-id-page-21-0-span-unity-networking-solutions"><span id="page-21-0"></span>Unity networking solutions</h1>
+<p>Unity provides comprehensive solutions for developing multiplayer games across various genres and scales. Selecting the right netcode solution is crucial because different game types have specific networking demands.</p>
+<p>Consider several factors here, including the game genre, scale, level of competitiveness, and the desired control over the networking layer. Casual games often prioritize simplicity and cost-effectiveness, while competitive games require precise and robust network management to ensure fairness and responsiveness.</p>
+<p>Whether you are building a casual cooperative game or a competitive action title, Unity offers powerful netcode packages and complementary services to meet your needs.</p>
+<h1 id="netcode-for-gameobjects">Netcode for GameObjects</h1>
+<p>For casual cooperative multiplayer games, Unity recommends using the <a href="https://docs.unity3d.com/Packages/com.unity.netcode.gameobjects@2.1/manual/index.html">Netcode for</a>  <a href="https://docs.unity3d.com/Packages/com.unity.netcode.gameobjects@2.1/manual/index.html">GameObjects</a> (NGO) package. This high-level solution simplifies developing multiplayer games by abstracting networking logic, making it easier to manage the game state for all players.</p>
+<p>If you&#39;re just getting started with multiplayer development, NGO serves as an excellent starting point.</p>
+<p>Netcode for GameObjects includes a few key features:</p>
+<p>— <strong>NetworkObject:</strong> This represents any object in the game that should be synchronized over the network. It handles object spawning, despawning, and ownership.</p>
+<p><span id="page-22-0"></span><img src="_page_22_Picture_0.jpeg" alt=""></p>
+<ul>
+<li><strong>NetworkBehaviour:</strong> This is a specialized MonoBehaviour that provides networking capabilities. It offers built-in callbacks for handling network events and allows you to write server-side and client-side code.</li>
+<li><strong>Remote procedure calls (RPCs)</strong>: These send messages and invoke methods on remote instances of your GameObjects using Server and Client RPCs.</li>
+<li><strong>NetworkVariable:</strong> This <a href="https://docs-multiplayer.unity3d.com/netcode/current/basics/networkvariable/index.html#docusaurus_skipToContent_fallback">is a class</a> that allows you to sync states across the network.</li>
+<li><strong>NetworkManager:</strong> This is <a href="https://docs-multiplayer.unity3d.com/netcode/current/components/networkmanager/">a central component</a> that manages the network state of your game, handling tasks such as connection, disconnection, and scene management.</li>
+</ul>
+<p>These components work at the application layer to help you implement multiplayer functionality. Netcode for GameObjects is designed to be simple yet powerful, providing the tools needed to create robust and scalable multiplayer games.</p>
+<h2 id="netcode-for-entities">Netcode for Entities</h2>
+<p>Built on top of Unity&#39;s <a href="https://blog.unity.com/engine-platform/new-ebook-understanding-unity-dots">Data-Oriented Technology Stack (DOTS)</a> and the Entity Component System (ECS), <a href="https://docs.unity3d.com/Packages/com.unity.netcode@1.4/manual/index.html">Netcode for Entities</a> is designed for server-authoritative gameplay. It includes advanced features like client-side prediction, interpolation, and lag compensation.</p>
+<p>In this setup, a centralized server handles all game simulations, reducing cheating by controlling game outcomes. Clients send inputs to the server, which processes these inputs and sends back the updated game state, minimizing potential manipulation.</p>
+<p>Netcode for Entities includes client-side prediction to mitigate latency, creating a smoother, near zero-lag experience. Compared to Netcode for GameObjects, it offers better scalability and bandwidth optimization.</p>
+<p>If you&#39;re an experienced multiplayer developer with a project that requires a high degree of performance and determinism, DOTS and ECS might be the right base for your game.</p>
+<p>To learn more about data-oriented design in Unity read our <a href="https://blog.unity.com/engine-platform/new-ebook-understanding-unity-dots">DOTS e-book</a> and reference this DOTS <a href="https://blog.unity.com/engine-platform/dots-bootcamp-resources">resources list</a>.</p>
+<p><img src="_page_22_Picture_13.jpeg" alt=""></p>
+<p>The Unity sample ECS Network Racing is built with Netcode for Entities.</p>
+<p><span id="page-23-0"></span><img src="_page_23_Picture_0.jpeg" alt=""></p>
+<p>Choosing the right Netcode solution depends on your project&#39;s requirements and your team&#39;s expertise. You can start by using the table below to help inform your decision.</p>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Netcode for GameObjects</th>
+<th>Netcode for Entities</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Target audience</td>
+<td>Beginners and intermediate developers</td>
+<td>Advanced developers</td>
+</tr>
+<tr>
+<td>Architecture</td>
+<td>Object-oriented (MonoBehaviour-based)</td>
+<td>Data-oriented (Entity<br>Component System -<br>ECS and DOTS)</td>
+</tr>
+<tr>
+<td>Performance</td>
+<td>Suitable for smaller scale games</td>
+<td>Optimized for high<br>performance and<br>scalability</td>
+</tr>
+<tr>
+<td>Scalability</td>
+<td>Limited, ideal for a small number of players</td>
+<td>High, designed for<br>large-scale games</td>
+</tr>
+<tr>
+<td>Networking<br>features</td>
+<td>NetworkVariables, RPCs, NetworkTransform,<br>limited client-side prediction (anticipation),<br>interpolation, supports UnityTransport</td>
+<td>Full featured client<br>side prediction,<br>interpolation, lag<br>compensation,<br>supports optimized<br>UnityTransport</td>
+</tr>
+<tr>
+<td>Unity Services<br>Integration</td>
+<td>Full support for Lobby, Relay, etc.</td>
+<td>Full support for Lobby,<br>Relay, etc.</td>
+</tr>
+<tr>
+<td>Sample projects</td>
+<td>Boss Room, Bite Size Samples</td>
+<td>Megacity Metro, ECS<br>Racing, Netcode<br>Samples</td>
+</tr>
+</tbody>
+</table>
+<p>Another great resource is Unity <a href="https://docs.unity3d.com/6000.0/Documentation/Manual/multiplayer-center.html">Multiplayer Center.</a> The Multiplayer Center provides a starting point to create a multiplayer game. It recommends Unity multiplayer packages based on the needs of your game, and gives you access to samples and tutorials to help you use them. See the <a href="https://docs.unity3d.com/6000.0/Documentation/Manual/multiplayer-center.html">Multiplayer Center documentation</a> for instructions on how to get and set up the package in your project.</p>
+<h1 id="unity-transport">Unity Transport</h1>
+<p>The <a href="https://docs.unity3d.com/Packages/com.unity.transport@2.0/manual/index.html">Unity Transport Package</a> is a netcode-agnostic library that provides a low-level network layer focused on performance and reliability – a modern, secure, and portable transport library that extends the conventional UDP with advanced features:</p>
+<ul>
+<li><strong>Reliability:</strong> Adds reliable communication over UDP, ensuring critical messages are delivered without the overhead of TCP</li>
+<li><strong>Security:</strong> Incorporates encryption and authentication to protect data from unauthorized access</li>
+</ul>
+<p><span id="page-24-0"></span><img src="_page_24_Picture_0.jpeg" alt=""></p>
+<ul>
+<li><strong>Performance:</strong> Optimized for low latency and high throughput</li>
+<li><strong>Cross-platform compatibility:</strong> Designed to work seamlessly across different platforms and devices</li>
+</ul>
+<p>Both Netcode for GameObjects and Netcode for Entities rely by default on Unity Transport. Developers looking to keep fine-grain control over the network can also use Unity Transport as a standalone library and build their own customized netcode on top for specific game needs.</p>
+<p>Unity Transport now adds WebGL support that can enhance the cross-platform and web multiplayer experience.</p>
+<h4 id="-third-party-networking-"><strong>Third-party networking</strong></h4>
+<p>Though we recommend starting with Netcode for GameObjects, it&#39;s important to understand it&#39;s not your only option. The Unity community features many different solutions to fit your specific needs.</p>
+<p>Here are some third-party networking options available from the Unity Asset Store:</p>
+<ul>
+<li><strong><a href="https://assetstore.unity.com/packages/tools/network/photon-unity-networking-classic-free-1786">Photon Unity Networking (PUN)</a>:</strong> Photon offers a comprehensive and scalable solution suitable for games demanding high concurrent user numbers.</li>
+<li><strong><a href="https://assetstore.unity.com/packages/tools/network/mirror-129321">Mirror:</a></strong> Known for its simplicity and ease of use, Mirror is a free open-source networking library originally based on Unity&#39;s UNet.</li>
+<li><strong><a href="https://assetstore.unity.com/packages/tools/network/darkrift-networking-2-95309">DarkRift Networking 2</a>:</strong> This solution provides both high performance and flexibility and is tailored for developers looking for detailed control over their networking.</li>
+<li><strong><a href="https://assetstore.unity.com/packages/tools/network/forge-networking-remastered-38344">Forge Networking Remastered</a></strong>: This is an open-source option that allows for advanced customization and control.</li>
+</ul>
+<h1 id="-span-id-page-25-0-span-setting-up-your-first-netcode-project"><span id="page-25-0"></span>Setting up your first Netcode project</h1>
+<p>If you haven&#39;t already tried Unity&#39;s networking solutions, setting up a basic Netcode project involves importing the necessary networking packages and then configuring the necessary multiplayer components.</p>
+<p>This chapter will walk through your first steps to add networking to a sample project using Netcode for GameObjects. Remember that in Unity 6 you can use <a href="https://docs.unity3d.com/6000.0/Documentation/Manual/multiplayer-center.html">Multiplayer Center</a> to set up a new multiplayer project, and <a href="https://docs.unity3d.com/Packages/com.unity.multiplayer.widgets@1.0/manual/get-started-learn-widgets.html">Multiplayer Widgets</a> for integrating additional Unity services into the project.</p>
+<h1 id="before-you-begin">Before you begin</h1>
+<p>Make sure you have the following:</p>
+<ul>
+<li>An active Unity account with a valid license</li>
+<li>The <a href="https://unity.com/download">Unity Hub</a></li>
+<li>A supported version of the Unity Editor; some features demonstrated here require Unity 6 or higher, refer to the <a href="https://docs-multiplayer.unity3d.com/netcode/current/installation">Netcode for GameObjects requirements</a></li>
+<li>A connection to the Unity Cloud dashboard to connect to the Unity services your project will need; you can do this via the Unity Hub</li>
+</ul>
+<p><span id="page-26-0"></span><img src="_page_26_Picture_0.jpeg" alt=""></p>
+<h1 id="sample-project-setup">Sample project setup</h1>
+<p>It&#39;s helpful to demo these netcode tools on an existing project with single-player locomotion. In this guide, we&#39;ll use the <a href="https://assetstore.unity.com/packages/essentials/starter-assets-thirdperson-updates-in-new-charactercontroller-pa-196526">Starter Assets – ThirdPerson package</a> from the Unity Asset Store. This simulates simple 3D gameplay with a humanoid character using the Universal Render Pipeline (URP).</p>
+<p>Get this free asset from the Unity Asset Store and then import it using the Package Manager.</p>
+<p><img src="_page_26_Picture_5.jpeg" alt=""></p>
+<p>The Starter Assets package from the Asset Store</p>
+<p>This demo project includes a small testing playground scene and a configurable third-person controller. The goal is to run multiple copies of this application and then have different clients interact in the same environment.</p>
+<h1 id="-span-id-page-27-0-span-installing-netcode-for-gameobjects"><span id="page-27-0"></span>Installing Netcode for GameObjects</h1>
+<p>In the Package Manager (<strong>Window &gt; Package Manager</strong>), filter for the Unity Registry. Then install the following packages:</p>
+<ul>
+<li><strong>Netcode for GameObjects</strong>: This is a foundational networking library that adds multiplayer capabilities to the existing GameObject/MonoBehaviour workflow. It streamlines multiplayer game development and is a great starting point for working with networked multiplayer.</li>
+<li><strong>Multiplayer Tools Window:</strong> This is an extra suite of five new tools introduced in Unity 6 that improve workflows for multiplayer development:<ul>
+<li>The <a href="https://docs-multiplayer.unity3d.com/tools/current/multiplayer-tools-window/">Multiplayer Tools Window</a> provides convenient access to all of the multiplayer tools and their documentation in one place.</li>
+<li>The <a href="https://docs-multiplayer.unity3d.com/tools/current/tools-network-simulator/">Network Simulator</a> replicates real-world network conditions, such as packet delay, loss, and disconnections to identify potential issues before going live.</li>
+<li>The <a href="https://docs-multiplayer.unity3d.com/tools/current/RNSM/">Runtime Network Stats Monitor (RNSM)</a> displays real-time network statistics, providing configurable onscreen monitoring of network performance.</li>
+<li><a href="https://docs-multiplayer.unity3d.com/tools/current/netscenevis/">Network Scene Visualization</a> enhances debugging by visually displaying network activity and object ownership in the scene view.</li>
+<li>The <a href="https://docs-multiplayer.unity3d.com/tools/current/hierarchy-network-debug/">Hierarchy Network Debug view</a> provides an overlay on the right-hand side of your Hierarchy window that identifies which objects are networked (with a small network cube logo).</li>
+</ul>
+</li>
+<li><a href="https://docs-multiplayer.unity3d.com/mppm/current/about/">Multiplayer Play Mode:</a> This Unity 6 package enables you to test multiplayer functionality without leaving the Unity Editor. You can simulate up to four players (the Main Editor Player plus three Virtual Players) for faster playtesting.</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th>Package Manager</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Package Manager</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>:</td>
+</tr>
+<tr>
+<td>+ ▼ Sort: Name (asc) ▼</td>
+<td>Filters ▼</td>
+<td>Clear Filters</td>
+<td></td>
+<td></td>
+<td>:</td>
+</tr>
+<tr>
+<td>In Project</td>
+<td></td>
+<td>Search Unity Registry<br>of</td>
+<td></td>
+<td>3 items selected</td>
+<td></td>
+</tr>
+<tr>
+<td>Updates</td>
+<td></td>
+<td>Multiplay</td>
+<td>1.1.1</td>
+<td>Install 1 item</td>
+<td>Install</td>
+</tr>
+<tr>
+<td>Unity Registry</td>
+<td></td>
+<td>Multiplayer Play Mode</td>
+<td>1.0.0</td>
+<td>&gt; Remove 2 items</td>
+<td>Remove</td>
+</tr>
+<tr>
+<td>റ്റ<br>My Assets</td>
+<td></td>
+<td>Multiplayer Tools</td>
+<td>2.1.0 V</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>글<br>Built-in</td>
+<td></td>
+<td>Netcode for Entities</td>
+<td>1.2.0</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Netcode for GameObjects</td>
+<td>1.8.1 V</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Services</td>
+<td></td>
+<td>Oculus XR Plugin</td>
+<td>4.2.0</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>OpenXR Plugin</td>
+<td>1.10.0</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>@ Performance testing API</td>
+<td>3.0.3 V</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Polybrush</td>
+<td>1.1.6</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Post Processing</td>
+<td>3.4.0</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>ProBuilder</td>
+<td>6.0.1</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Profile Analyzer</td>
+<td>1.2.2</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Push Notifications</td>
+<td>4.0.0-pre.1   RC</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Python Scripting</td>
+<td>7.0.1</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Recorder</td>
+<td>5.1.0</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Last update Apr 23, 14:12</td>
+<td>C</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Install Netcode for GameObjects and its supporting packages.</p>
+<p><span id="page-28-0"></span><img src="_page_28_Picture_0.jpeg" alt=""></p>
+<h1 id="adding-the-networkmanager">Adding the NetworkManager</h1>
+<p>Every project will need a <strong>NetworkManager</strong> component to support networked multiplayer. This essential component manages the network state of your project, handling connections and network configurations.</p>
+<p>To add a NetworkManager to your scene, create a new GameObject in the Hierarchy and add the <strong>NetworkManager</strong> component (<strong>Netcode &gt; NetworkManager</strong>).</p>
+<p>In the NetworkManager component, configure the <strong>Network Transport</strong> layer. Choose Unity Transport.</p>
+<table>
+<thead>
+<tr>
+<th>▼ &gt; Network Manager</th>
+<th></th>
+<th>2</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Run In Background</td>
+<td>&gt;</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Log Level</td>
+<td>Normal</td>
+<td></td>
+<td>V</td>
+</tr>
+<tr>
+<td>Player Prefab</td>
+<td>None (Game Object)</td>
+<td></td>
+<td>O</td>
+</tr>
+<tr>
+<td>V Network Prefabs Lists</td>
+<td></td>
+<td>1</td>
+<td></td>
+</tr>
+<tr>
+<td>Element O</td>
+<td>@ DefaultNetworkPrefabs (Network Prefabs List)</td>
+<td></td>
+<td>O</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>+</td>
+<td></td>
+</tr>
+<tr>
+<td>General</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Protocol Version</td>
+<td>0</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Network Transport</td>
+<td>Missing (Network Transport)</td>
+<td></td>
+<td>0</td>
+</tr>
+<tr>
+<td></td>
+<td>You have no transport selected. A transport is required for netcode to work. Which one do you want?</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>V Select transport</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>UnityTransport</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Ensure Network Variable Length Safety</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Connection</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Connection Approval</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Client Connection Buffer Timeout</td>
+<td>10</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Spawning</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Force Same Prefabs</td>
+<td>&gt;</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Recycle Network Ids</td>
+<td>&gt;</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Network Id Recycle Delay</td>
+<td>120</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Bandwidth</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Rpc Hash Size</td>
+<td>Var Int Four Bytes</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Scene Management</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Enable Scene Management</td>
+<td>&gt;</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Load Scene Time Out</td>
+<td>120</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Start Connection</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>Start Host</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>Start Server</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>Start Client</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Select a transport layer in the NetworkManager.</p>
+<p>This attaches a <strong>UnityTransport</strong> component to the GameObject. The transport layer is responsible for low-level networking tasks, such as connection management, data transmission, and packet encryption.</p>
+<table>
+<thead>
+<tr>
+<th>J √ Unity Transport</th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Protocol Type</td>
+<td>Unity Transport</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Max Packet Queue Size</td>
+<td>128</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Max Payload Size</td>
+<td>6144</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Heartbeat Timeout MS</td>
+<td>500</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Connect Timeout MS</td>
+<td>1000</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Max Connect Attempts</td>
+<td>60</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Disconnect Timeout MS</td>
+<td>30000</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Debug Simulator</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Address</td>
+<td>127.0.0.1</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Port</td>
+<td>7777</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>device.</td>
+<td>It&#39;s recommended to leave remote connections disabled for local testing to avoid exposing ports on your</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Allow Remote Connections?</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Override Bind IP (optional)</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>The UnityTransport component</p>
+<p><span id="page-29-0"></span>Though you don&#39;t need to modify these settings yet, this component can help simulate network conditions (e.g., latency, packet loss, and jitter) for testing and debugging in the Editor.</p>
+<p>Save the scene and go to <strong>File &gt; Build Settings</strong> and make sure your current scene is added to the <strong>Scenes in Build</strong> list. This ensures the new NetworkManager is included in the game build.</p>
+<h1 id="networkobjects">NetworkObjects</h1>
+<p><a href="https://docs-multiplayer.unity3d.com/netcode/current/basics/networkobject/">NetworkObject</a> is a required component for any GameObject that needs to be networked or synchronized across different clients in a multiplayer game. When you add a NetworkObject component to a GameObject, it becomes &quot;networkable,&quot; meaning that its state and behavior can be shared and updated across the network.</p>
+<table>
+<thead>
+<tr>
+<th>▼ # √ Network Object</th>
+<th></th>
+<th>3 -</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Always Replicate As Root</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Synchronize Transform</td>
+<td>&gt;</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Active Scene Synchronization</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Scene Migration Synchronization</td>
+<td>&gt;</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Spawn With Observers</td>
+<td>&gt;</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Dont Destroy With Owner</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Auto Object Parent Sync</td>
+<td>&gt;</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>GlobalObjectIdHash</td>
+<td>208923481</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>NetworkManager</td>
+<td>null</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>The NetworkObject component and its unique ID</p>
+<p>Each NetworkObject has a few identifiers:</p>
+<ul>
+<li>The <strong>GlobalObjectIdHash</strong> identifies the prefab asset in the project.</li>
+<li>The <strong>NetworkObjectId</strong> is the unique identifier that differentiates instances of the same prefab asset.</li>
+<li>The <strong>OwnerClientId</strong> represents the client that &quot;owns&quot; the object (see Authority below).</li>
+</ul>
+<p>These identifiers help the NetworkManager keep track of it and ensure that its state is consistent across all connected clients. NetworkObjects can be dynamically created (spawned) or destroyed during gameplay.</p>
+<p>Spawning a NetworkObject makes it appear on all connected clients. Each NetworkObject has an owner, typically the client that controls its behavior and state.</p>
+<p><span id="page-30-0"></span><img src="_page_30_Picture_0.jpeg" alt=""></p>
+<h1 id="player-networkobjects">Player NetworkObjects</h1>
+<p>Each player can optionally have their own prefab called a <a href="https://docs-multiplayer.unity3d.com/netcode/current/basics/networkobject/#player-networkobjects">Player NetworkObject.</a> This is a special type of NetworkObject that often contains the character controller and visual representation of the player in the game.</p>
+<table>
+<thead>
+<tr>
+<th>0<br>Preview</th>
+<th>V<br>PlayerArmature_Networked</th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th>Static ·</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><br>Preview</td>
+<td>Tag Player</td>
+<td></td>
+<td></td>
+<td>Layer</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>PlayerArmature_Networked</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>V 25<br>Transform</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>@ 花</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>Position</td>
+<td></td>
+<td>×<br>0</td>
+<td></td>
+<td>Y O</td>
+<td>Z<br>0</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>Rotation</td>
+<td></td>
+<td>×<br>0</td>
+<td></td>
+<td>Y O</td>
+<td>Z<br>0</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>Scale</td>
+<td></td>
+<td>QX 1</td>
+<td></td>
+<td>Y21</td>
+<td>Z 1</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>0</td>
+<td>✓ Character Controller</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>0 花</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>&gt; &gt; Third Person Controller (Script)</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>@</td>
+<td>北</td>
+</tr>
+<tr>
+<td></td>
+<td>&gt; Animator</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>@</td>
+<td>25<br>1</td>
+</tr>
+<tr>
+<td></td>
+<td>Starter Assets Inputs (Script)</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>@</td>
+<td>北</td>
+</tr>
+<tr>
+<td></td>
+<td>V Player Input<br>(1)</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>@</td>
+<td>14<br></td>
+</tr>
+<tr>
+<td></td>
+<td>V Network Object</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>@</td>
+<td>本</td>
+</tr>
+<tr>
+<td></td>
+<td>Always Replicate As Root</td>
+<td></td>
+<td>ﺍﻟﻤﻮﺍﻗﻊ ﺍﻟﻤﺴﺘﻮﻯ ﺍﻟﻤﺴﺘﻮﻯ ﺍﻟﻤﺴﺘﻮﻯ ﺍﻟﻤﺴﺘﻮﻯ ﺍﻟﻤﺴﺘﻮﻯ ﺍﻟﻤﺴﺘﻮﻯ ﺍﻟﻤﺴﺘﻮﻯ ﺍﻟﻤﺴﺘﻮﻯ ﺍﻟﻤﺴﺘﻮﻯ ﺍﻟﻤﺴﺘﻮﻯ ﺍﻟﻤﺴﺘﻮﻯ ﺍﻟﻤﺴﺘﻮﻯ ﺍﻟﻤﺴﺘﻮﻯ ﺍﻟﻤﺴﺘﻮﻯ ﺍﻟﻤﺴﺘﻮﻯ ﺍﻟﻤﺴﺘﻮﻯ ﺍﻟﻤﺴﺘﻮﻯ ﺍﻟﻤﺴﺘﻮﻯ ﺍﻟﻤﺴﺘﻮﻯ ﺍﻟﻤﺴﺘﻮﻯ ﺍﻟﻤﺴﺘ</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>Synchronize Transform</td>
+<td></td>
+<td>&gt;</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>Active Scene Synchronization</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>Scene Migration Synchronization</td>
+<td></td>
+<td>&gt;</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>Spawn With Observers</td>
+<td></td>
+<td>&gt;</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>Dont Destroy With Owner</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>&gt;<br>Auto Object Parent Sync</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>GlobalObjectIdHash<br>3715449585</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>NetworkManager</td>
+<td></td>
+<td>null</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>Client Player Move (Script)</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>@ 花</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>Client Network Transform (Script)</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>@</td>
+<td>北<br>2</td>
+</tr>
+<tr>
+<td></td>
+<td>Client Network Animator (Script)</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>@</td>
+<td>北<br>10</td>
+</tr>
+<tr>
+<td></td>
+<td>Animator</td>
+<td></td>
+<td></td>
+<td></td>
+<td>&gt; PlayerArmature_Networked (Animator)</td>
+<td></td>
+<td></td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<p>The Player NetworkObject in the sample project</p>
+<p>Player NetworkObjects often store and sync player-specific data, such as the player&#39;s name, score, inventory, or other relevant information. This data is synchronized across the network to ensure that all connected players have a consistent view of the game state.</p>
+<p>When a client connects, the NetworkManager creates a Player NetworkObject that is &quot;owned&quot; by the corresponding player. This means that the player has authority over their PlayerObject and can control its behavior and state.</p>
+<p>To set up a Player NetworkObject, start by creating a standard prefab GameObject in your project. This prefab acts as a template for the PlayerObject, containing the necessary components and scripts that define the player&#39;s behavior and appearance.</p>
+<p><span id="page-31-0"></span><img src="_page_31_Picture_0.jpeg" alt=""></p>
+<p>Then, add the appropriate netcode components. These might include:</p>
+<ul>
+<li><strong>NetworkObject:</strong> Every object that will be networkable needs a NetworkObject component. This contains properties and events related to spawning, despawning, and ownership.</li>
+<li><strong>NetworkBehaviours:</strong> These scripts add networking behavior to their MonoBehaviour base class. NetworkBehaviours contain network variables, remote procedure calls (RPCs), and network callbacks.</li>
+<li><strong>NetworkAnimators:</strong> This component syncs animation states and parameters between clients.</li>
+<li><strong>NetworkTransform:</strong> This component ensures that the player&#39;s position, rotation, and scale are replicated in real-time from the server to all connected clients.</li>
+</ul>
+<p>Player NetworkObjects are often responsible for handling player input. When a player performs an action, such as moving or interacting with the game world, the input is processed and then propagated to other connected players as needed.</p>
+<p>Player logic involves a combination of MonoBehaviours for direct game mechanics and NetworkBehaviours for managing network states. Non-networked components, such as character controllers and animators, function normally on each player&#39;s local instance.</p>
+<p>Using these components locally not only optimizes performance but also reduces network traffic, which can be important when working with limited bandwidth between your clients.</p>
+<h2 id="creating-a-player-networkobject">Creating a Player NetworkObject</h2>
+<p>Load up the <strong>Playground</strong> scene from the sample project.</p>
+<p><img src="_page_31_Figure_12.jpeg" alt=""></p>
+<p>The Starter Assets bundle includes a Playground scene.</p>
+<p><img src="_page_32_Picture_0.jpeg" alt=""></p>
+<p>The Hierarchy includes a PlayerArmature that drives the game character. To convert this into a Player NetworkObject, drag it from the Hierarchy to create a new Original Prefab or modify a copy of the existing prefab in the project.</p>
+<p>In the Hierarchy window, locate the PlayerArmature GameObject. Delete it to remove the PlayerArmature and its child objects from the scene, leaving only the game environment in the scene.</p>
+<p>Then, edit the prefab in the Inspector. Add the <strong>NetworkObject</strong> component. This component is required for the object to be recognized and managed across the network.</p>
+<p><img src="_page_32_Picture_5.jpeg" alt=""></p>
+<p>Add the NetworkObject to the prefab.</p>
+<p>Register the Player NetworkObject in the <strong>Player Prefab</strong> field of the NetworkManager.</p>
+<table>
+<thead>
+<tr>
+<th>V Network Manager</th>
+<th></th>
+<th>0</th>
+<th>14</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Run In Background</td>
+<td>V</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Log Level</td>
+<td>Normal</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Player Prefab</td>
+<td>PlayerArmature_Networked</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>&gt; Network Prefabs Lists</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>General</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Protocol Version</td>
+<td>0</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Network Transport</td>
+<td>NetworkManager (Unity Transport)</td>
+<td></td>
+<td></td>
+<td>0</td>
+</tr>
+<tr>
+<td>Tick Rate</td>
+<td>30</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Performance</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Register the Player NetworkObject in the NetworkManager.</p>
+<p><img src="_page_33_Picture_0.jpeg" alt=""></p>
+<p>Play mode only shows the game environment. The Player NetworkObject will only appear when a client connects.</p>
+<p>Select the <strong>NetworkManager</strong>, which now appears under <strong>DontDestroyOnLoad</strong> in the Hierarchy.</p>
+<table>
+<thead>
+<tr>
+<th>V Network Manager</th>
+<th></th>
+<th>0</th>
+<th>14</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Run In Background</td>
+<td>&gt;</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Log Level</td>
+<td>Normal</td>
+<td></td>
+<td></td>
+<td>A</td>
+</tr>
+<tr>
+<td>Player Prefab</td>
+<td>PlayerArmature_Networked</td>
+<td></td>
+<td></td>
+<td>0</td>
+</tr>
+<tr>
+<td>&gt; Network Prefabs Lists</td>
+<td></td>
+<td>1</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>General</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Protocol Version</td>
+<td>0</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Network Transport</td>
+<td>NetworkManager (Unity Transport)</td>
+<td></td>
+<td></td>
+<td>0</td>
+</tr>
+<tr>
+<td>Tick Rate</td>
+<td>30</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Performance</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Ensure Network Variable Lengt</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Connection</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Connection Approval</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Client Connection Buffer Time( 10</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Spawning</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Force Same Prefabs</td>
+<td>&gt;</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Recycle Network Ids</td>
+<td>V</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Network Id Recycle Delay</td>
+<td>120</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Bandwidth</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Rpc Hash Size</td>
+<td>Var Int Four Bytes</td>
+<td></td>
+<td></td>
+<td>A</td>
+</tr>
+<tr>
+<td>Scene Management</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Enable Scene Management</td>
+<td>&gt;</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Load Scene Time Out</td>
+<td>120</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Start Connection</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>Start Host</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>Start Server</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>Start Client</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Start the host on the NetworkManager.</p>
+<p>Select <strong>Start Host</strong>. This spawns the Player NetworkedObject.</p>
+<p>The <strong>PlayerArmature_Network</strong> object appears in the Hierarchy. The game is playable once again (though the camera target is disabled). Use the WASD controls to test the player movement.</p>
+<p>Exit Play mode and the player character disappears. The NetworkManager now spawns and manages this specific player character at runtime.</p>
+<p>Keep in mind that the networked aspect of the game won&#39;t be apparent until you have multiple clients connected. We&#39;ll need to test with several clients to understand how this works in a multiplayer scene.</p>
+<p><span id="page-34-0"></span><img src="_page_34_Picture_0.jpeg" alt=""></p>
+<h1 id="multiplayer-play-mode">Multiplayer Play Mode</h1>
+<p>Testing multiplayer requires running the application across separate runtime processes. Previously, this involved making a separate game build and running it alongside the Unity Editor.</p>
+<p>While you still have that option, Unity 6 includes <strong>Multiplayer Play Mode</strong> (<strong>MPPM</strong>). MPPM enables developers to open multiple instances of the Unity Editor simultaneously, replicating a multiplayer environment. This streamlines the multiplayer testing process.</p>
+<p>Install Multiplayer Play Mode via the Package Manager. Then, you won&#39;t need to build the application every time you need to test a new feature.</p>
+<h4 id="open-multiplayer-play-mode-window-multiplayer-play-mode-">Open <strong>Multiplayer Play Mode</strong> (<strong>Window &gt; Multiplayer Play Mode</strong>).</h4>
+<p><img src="_page_34_Picture_7.jpeg" alt=""></p>
+<p>The Multiplayer Play Mode window</p>
+<p>Then, check at least one additional Virtual Player from the list in the above screenshot, so you can test a minimum of one host and client. Remember that the host is a client that is also running on the server.</p>
+<p>When entering Play mode, a second session of the application starts running in a cloned window.</p>
+<p><img src="_page_35_Picture_1.jpeg" alt=""></p>
+<p>Multiplayer Player Mode clones a Virtual Player.</p>
+<p>Select the <strong>NetworkManager</strong> in the Hierarchy. Under <strong>Start Connection</strong> in the Inspector, select <strong>Start Host</strong>. The PlayerArmature_Networked object appears in the Game view.</p>
+<p>Use the Layout button in the second window to enable the Inspector and Hierarchy – much like a second session of the Editor. Select the user interface components to enable and press <strong>Apply</strong>.</p>
+<p><img src="_page_36_Picture_1.jpeg" alt=""></p>
+<p>Enable the Layouts in the cloned window.</p>
+<p>In the cloned Editor window, locate the <strong>NetworkManager</strong> under <strong>DontDestroyOnLoad</strong> in the Hierarchy.</p>
+<p>In the Inspector pane, under <strong>Start Connection</strong>, select <strong>Start Client.</strong></p>
+<table>
+<thead>
+<tr>
+<th>V Network Manager</th>
+<th></th>
+<th>0</th>
+<th>2</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Run In Background</td>
+<td>&gt;</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Log Level</td>
+<td>Normal</td>
+<td></td>
+<td></td>
+<td>D</td>
+</tr>
+<tr>
+<td>Player Prefab</td>
+<td>PlayerArmature_Networked</td>
+<td></td>
+<td></td>
+<td>0</td>
+</tr>
+<tr>
+<td>&gt; Network Prefabs Lists</td>
+<td></td>
+<td>1</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>General</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Protocol Version</td>
+<td>0</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Network Transport</td>
+<td>NetworkManager (Unity Transport)</td>
+<td></td>
+<td></td>
+<td>0</td>
+</tr>
+<tr>
+<td>Tick Rate</td>
+<td>30</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Performance</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Ensure Network Variable Lengt</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Connection</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Connection Approval</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Client Connection Buffer Timer 10</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Spawning</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Force Same Prefabs</td>
+<td>&gt;</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Recycle Network Ids</td>
+<td>&gt;</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Network Id Recycle Delay</td>
+<td>120</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Bandwidth</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Rpc Hash Size</td>
+<td>Var Int Four Bytes</td>
+<td></td>
+<td></td>
+<td>V</td>
+</tr>
+<tr>
+<td>Scene Management</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Enable Scene Management</td>
+<td>&gt;</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Load Scene Time Out</td>
+<td>120</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Start Connection</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>Start Host</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>Start Server</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>Start Client</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>The NetworkManager contains buttons to connect the client.</p>
+<p><img src="_page_37_Picture_0.jpeg" alt=""></p>
+<p>Two instances of PlayerArmature_Networked now appear in the Hierarchy. In the Scene view, they appear on top of one another. Using the keyboard or gamepad, move one player instance away from the other to separate them.</p>
+<p>Select a PlayerArmature_Networked instance in the Hierarchy to inspect its NetworkObject component.</p>
+<p>At runtime, note how each instance is identified by its <strong>GlobalObjectIdHash</strong> (project asset ID) together with its <strong>NetworkObjectId</strong> (unique instance index). Below that, the <strong>OwnerClientId</strong> indicates whether the host or the client controls the instance.</p>
+<p>Switch between the two instances to compare the flags: <strong>IsSpawned</strong>, <strong>IsLocalPlayer</strong>, <strong>IsOwner</strong>, <strong>IsOwnerByServer</strong>, etc.</p>
+<p><img src="_page_37_Figure_6.jpeg" alt=""></p>
+<p>Compare the NetworkObject settings between the two instances.</p>
+<p>Use the Network Visualization panel to distinguish between the two instances more clearly. This handy diagnostic tool appears in the Scene view once you&#39;ve installed the Multiplayer Tools package.</p>
+<p>The two instances are color coded by <strong>Bandwidth</strong> (how much data is being transmitted) or <strong>Ownership</strong> (which client has authority over the Player NetworkObject).</p>
+<p><img src="_page_38_Picture_1.jpeg" alt=""></p>
+<p>Network Visualization helps to debug the network objects.</p>
+<p>Though the NetworkManager creates separate instances for each client, each independently controls the same character. In the Scene view, the character movements driven by WASD controls are not synchronized between the client and host.</p>
+<p>Although the NetworkManager initially synchronizes their positions at coordinates (0, 0, 0) when players first connect, their subsequent movements are not. Currently several local components drive the character&#39;s behavior:</p>
+<ul>
+<li>A <strong>CharacterController</strong> allows for the player to move while interacting with the game environment, without requiring complex physics calculations.</li>
+<li>An <strong>Animator</strong> enables animation based on a state machine. The Animator controls the transitions and blending between running, jumping, or idle states.</li>
+<li>PlayerInput handles per-player input management, device pairing, and event notifications, providing a high-level wrapper around the Unity Input System.</li>
+<li>StarterAssetsInputs translates that input into values for the character&#39;s movement, look, jump, and sprint inputs.</li>
+</ul>
+<p>These are single-player components. To make these work in a multiplayer application, we need to add some networked scripting.</p>
+<p><span id="page-39-0"></span><img src="_page_39_Picture_0.jpeg" alt=""></p>
+<h3 id="-creating-your-own-ui-start-buttons-"><strong>Creating your own UI start buttons</strong></h3>
+<p>To create a more user-friendly way to start network sessions at runtime, you can add onscreen buttons that replicate the functionality of the NetworkManager&#39;s Inspector buttons. This can be achieved using either Unity UI (UGUI) or UI Toolkit.</p>
+<p>In your UI of choice, create three buttons labeled Client, Host, and Server. Then, have them invoke these respective callbacks from the NetworkManager singleton:</p>
+<ul>
+<li>NetworkManager.Singleton.StartClient</li>
+<li>NetworkManager.Singleton.StartHost</li>
+<li>NetworkManager.Singleton.StartServer</li>
+</ul>
+<p>These callbacks allow you to start the network session without using the buttons from the Inspector window.</p>
+<h2 id="adding-networkbehaviour">Adding NetworkBehaviour</h2>
+<p>To manage the MonoBehaviours on the PlayerArmature_Networked, we can use a NetworkBehaviour.</p>
+<p>A NetworkBehaviour is a specialized type of MonoBehaviour, designed for networked logic. It provides the framework necessary for synchronizing actions and states across different game clients.</p>
+<p>NetworkBehaviour shares the same lifecycle events as MonoBehaviours but also incorporates several network-specific features:</p>
+<p><strong>RPC Methods:</strong> NetworkBehaviours can utilize remote procedure calls (RPCs) to handle communications across the network. These methods are annotated with the [Rpc] attribute. To send an Rpc to a server or client, call [Rpc(SendTo.Server)] and [Rpc(SendTo. Client)], respectively.</p>
+<ul>
+<li><strong>NetworkVariable:</strong> This is a specialized variable designed for synchronized state management across the network. Changes to a NetworkVariable on the server are automatically propagated to all clients.</li>
+<li><strong>OnNetworkSpawn</strong> and <strong>OnNetworkDespawn</strong>: These lifecycle methods are triggered when a NetworkBehaviour is instantiated or destroyed. OnNetworkSpawn is used for initialization (think of OnEnable or Start except for networked behavior). OnNetworkDespawn handles cleanup before an object is removed from the network (e.g., analogous to OnDestroy or OnDisable).</li>
+<li><strong>Ownership</strong>: NetworkBehaviour allows specific clients (or the server) to have ownership over certain objects. This concept of authority, where either a client or the server can &quot;own&quot; a NetworkObject, ensures that only designated players should be able to control or interact with specific objects.</li>
+</ul>
+<p><img src="_page_40_Picture_0.jpeg" alt=""></p>
+<p>We can implement a NetworkBehaviour called ClientPlayerMove to manage the player movement. This can make sure that input from the host and the client only works on their respective player objects. Here&#39;s the example setup:</p>
+<pre><code><span class="hljs-keyword">using</span> Unity.Netcode;
+<span class="hljs-keyword">using</span> StarterAssets;
+<span class="hljs-keyword">using</span> UnityEngine;
+<span class="hljs-keyword">using</span> UnityEngine.InputSystem;
+<span class="hljs-keyword">namespace</span> <span class="hljs-title">NetcodeDemo</span>
+{
+ <span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">ClientPlayerMove</span>: <span class="hljs-title">NetworkBehaviour</span>
+ {
+ [SerializeField]
+ CharacterController m_CharacterController;
+ [SerializeField]
+ ThirdPersonController m_ThirdPersonController;
+ [SerializeField]
+ PlayerInput m_PlayerInput;
+
+ [SerializeField]
+ Transform m_CameraFollow;
+ <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Awake</span>(<span class="hljs-params"></span>)
+ </span>{
+ m_PlayerInput.enabled = <span class="hljs-literal">false</span>;
+ m_ThirdPersonController.enabled = <span class="hljs-literal">false</span>;
+ m_CharacterController.enabled = <span class="hljs-literal">false</span>;
+ }
+ <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-keyword">void</span> <span class="hljs-title">OnNetworkSpawn</span>(<span class="hljs-params"></span>)
+ </span>{
+ <span class="hljs-keyword">base</span>.OnNetworkSpawn();
+ enabled = IsClient; <span class="hljs-comment">// Enable if this is a client.</span>
+ <span class="hljs-keyword">if</span> (!IsOwner)
+ {
+ <span class="hljs-comment">// Disable if this is not the owner</span>
+ enabled = <span class="hljs-literal">false</span>;
+ m_PlayerInput.enabled = <span class="hljs-literal">false</span>;
+ m_CharacterController.enabled = <span class="hljs-literal">false</span>;
+ m_ThirdPersonController.enabled = <span class="hljs-literal">false</span>;
+ <span class="hljs-keyword">return</span>;
+ }
+
+ <span class="hljs-comment">// Enable if this is an owner</span>
+ m_PlayerInput.enabled = <span class="hljs-literal">true</span>;
+ m_CharacterController.enabled = <span class="hljs-literal">true</span>;
+ m_ThirdPersonController.enabled = <span class="hljs-literal">true</span>;
+
+ }
+ }
+}
+</code></pre><p><img src="_page_41_Picture_0.jpeg" alt=""></p>
+<p>Add this to the PlayerArmature_Networked prefab. Then fill out the appropriate fields in the Inspector.</p>
+<p><img src="_page_41_Picture_2.jpeg" alt=""></p>
+<p>Fill out the ClientPlayerMove fields in the Inspector.</p>
+<p>Once this script is applied to the prefab, connect the host and client sessions. When clients connect to the NetworkManager, certain components of the player object are disabled by default due to the IsOwner property, which checks if the local player is the owner of the instance.</p>
+<p>In the Hierarchy, toggle the selection between the two instances of PlayerArmature_ Networked.</p>
+<p><img src="_page_41_Figure_6.jpeg" alt=""></p>
+<p>Several components disable themselves if not the owner.</p>
+<p><span id="page-42-0"></span><img src="_page_42_Picture_0.jpeg" alt=""></p>
+<p>Note how several components (like the PlayerInput) now appear deactivated on player instances not owned by the respective client. For the host, this setup allows control over one of the player instances, and for the client, control over the other.</p>
+<p>However, though we can control different player instances, their movements are not synchronized across the network. To make the movement match from host to client, we&#39;ll need to add additional network components like NetworkTransform.</p>
+<h4 id="-authority-and-ownership-properties-"><strong>Authority and ownership properties</strong></h4>
+<p>By default, the server owns NetworkObjects, although connected and approved clients can also own NetworkObjects using the SpawnWithOwnership method. Netcode for GameObjects is server-authoritative, which means that only the server is authorized to spawn and despawn NetworkObjects.</p>
+<p>NetworkBehaviour includes some quick ways to determine the authority and ownership of an instance:</p>
+<ul>
+<li><strong>IsClient</strong> indicates if the instance is running on a client.</li>
+<li><strong>IsServer</strong> indicates if the instance is running on a server.</li>
+<li><strong>IsHost</strong> indicates if the instance is running on a host, which is both a server and a client.</li>
+<li><strong>IsLocalPlayer</strong> indicates if the associated NetworkObject is the local player object.</li>
+<li><strong>IsOwner</strong> indicates if the local player owns the object or if the object is the local player object.</li>
+<li><strong>IsPlayerObject</strong> indicates if the GameObject represents a network player, typically controlled by a specific client.</li>
+<li><strong>IsSceneObject</strong> indicates if the GameObject is part of the scene by default and not spawned dynamically during gameplay. A scene object is usually managed by the server for consistent state across the network.</li>
+</ul>
+<p>Inspecting the NetworkObject at runtime shows some of these properties.</p>
+<table>
+<thead>
+<tr>
+<th>The NetworkObject settings</th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><span id="page-43-0"></span><img src="_page_43_Picture_0.jpeg" alt=""></p>
+<h1 id="sync-using-a-networktransform-and-networkanimator">Sync using a NetworkTransform and NetworkAnimator</h1>
+<p>Though the NetworkBehaviour lets us spawn the same player instance on multiple clients, synchronizing its movements across the network requires additional components.</p>
+<p>Add a <strong>NetworkTransform</strong> component to the PlayerArmature_Networked prefab. Uncheck any axes which won&#39;t affect gameplay; in this case, uncheck all scales, as well as x rotation and z rotation axes. Because synchronization uses bandwidth, it&#39;s essential to minimize syncing any superfluous data.</p>
+<p>In Multiplayer Play Mode, focusing on the host window allows you to move the player using the controls and watch it sync to the client. This demonstrates the beginning of networked play.</p>
+<p>Next add the <strong>NetworkAnimator</strong> component to the PlayerAramature_Networked. Drag the existing Animator component into the empty field.</p>
+<table>
+<thead>
+<tr>
+<th>V PlayerArmature_Networked</th>
+<th></th>
+<th>Static</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tag<br>Player</td>
+<td>&gt;<br>Layer</td>
+<td>A</td>
+</tr>
+<tr>
+<td>2<br>4<br>Transform</td>
+<td></td>
+<td>@<br>北<br></td>
+</tr>
+<tr>
+<td>9<br>✓ Character Controller<br>1</td>
+<td></td>
+<td>0<br>2<br></td>
+</tr>
+<tr>
+<td>&gt; Third Person Controller (Script)</td>
+<td></td>
+<td>0<br>2<br></td>
+</tr>
+<tr>
+<td>Animator<br>1<br>V</td>
+<td>Assign to field</td>
+<td>0<br>2<br></td>
+</tr>
+<tr>
+<td>Starter Assets Inputs (Script)</td>
+<td></td>
+<td>0<br>2<br></td>
+</tr>
+<tr>
+<td>(1)<br>V Player Input<br>1</td>
+<td></td>
+<td>0<br>北<br></td>
+</tr>
+<tr>
+<td>#<br>V Network Object<br>12</td>
+<td></td>
+<td>0<br>2<br></td>
+</tr>
+<tr>
+<td>&gt; Network Animator<br>2</td>
+<td></td>
+<td>2<br>0<br></td>
+</tr>
+<tr>
+<td>Animator</td>
+<td>&gt; PlayerArmature_Networked (Animator)</td>
+<td>0</td>
+</tr>
+<tr>
+<td>V Network Transform</td>
+<td></td>
+<td>0<br>北<br>2</td>
+</tr>
+<tr>
+<td>Syncing<br>Position<br>Rotation<br>Scale</td>
+<td>VX<br>VY<br>VZ<br>Uncheck<br>Z<br>VY<br>×<br>unused<br>r Z<br>×<br>EY<br>axes</td>
+<td></td>
+</tr>
+<tr>
+<td>Thresholds<br>Position Threshold<br>Rot Angle Threshold<br>Scale Threshold</td>
+<td>0.001<br>0.01</td>
+<td>0.01</td>
+</tr>
+<tr>
+<td>Delivery<br>Use Unreliable Deltas</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Configurations<br>In Local Space<br>Interpolate<br>Slerp Position<br>Use Quaternion Synchronization<br>Use Half Float Precision</td>
+<td>1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1<br>ﺍﻟﻤﺴﺘﻮﻯ ﺍﻟﻤﺴﺘﻮﻯ ﺍﻟﻤﺴﺘﻮﻯ ﺍﻟﻤﺴﺘﻮﻯ ﺍﻟﻤﺴﺘﻮﻯ ﺍﻟﻤﺴﺘﻮﻯ ﺍﻟﻤﺴﺘﻮﻯ ﺍﻟﻤﺴﺘﻮﻯ ﺍﻟﻤﺴﺘﻮﻯ ﺍﻟﻤﺴﺘﻮﻯ ﺍﻟﻤﺴﺘﻮﻯ ﺍﻟﻤﺴﺘﻮﻯ ﺍﻟﻤﺴﺘﻮﻯ ﺍﻟﻤﺴﺘﻮﻯ ﺍﻟﻤﺴﺘﻮﻯ ﺍﻟﻤﺴﺘﻮﻯ ﺍﻟﻤﺴﺘﻮﻯ ﺍﻟﻤﺴﺘﻮﻯ ﺍﻟﻤﺴﺘﻮﻯ ﺍﻟﻤﺴﺘﻮﻯ ﺍﻟﻤﺴﺘﻮﻯ ﺍﻟﻤﺴﺘ</td>
+</tr>
+</tbody>
+</table>
+<p>Add a NetworkTransform and NetworkAnimator component.</p>
+<p>The client window represents a second machine that is connected to the host. Ideally, any actions performed on the host are reflected on the client and vice versa.</p>
+<p>The NetworkTransform allows you to sync the position, rotation, and scale of a Transform, while the NetworkAnimator syncs the animation states. Now when your host player runs around the playground environment, its movements transfer to the client in Multiplayer Play Mode.</p>
+<p>However, not everything works as expected. Switch focus to the client window and try using the controls. While the host syncs correctly to the client, the client&#39;s movements may not reflect on the host.</p>
+<p><img src="_page_44_Picture_4.jpeg" alt=""></p>
+<p>The player appears to run in place.</p>
+<p>The client receives input, as indicated by the character animating in place, but the player instance doesn&#39;t move. This happens because the NetworkTransform operates under server authority, syncing only the server&#39;s position to the client.</p>
+<p>When you try to move the player on the client, the server overrides the client&#39;s desired position, resetting it to (0, 0, 0).</p>
+<p><span id="page-45-0"></span><img src="_page_45_Picture_0.jpeg" alt=""></p>
+<h1 id="applying-client-authority">Applying client authority</h1>
+<p>By default, NetworkTransform operates in server authoritative mode. Changes to the transform axis are detected on the server-side and pushed to connected clients.</p>
+<p>In our example, trying to transform the player on the client fails because the server – maintaining an authoritative state with the transform set to (0,0,0) – overrides these client-side changes.</p>
+<p><img src="_page_45_Figure_5.jpeg" alt=""></p>
+<p>Server authority overrides the client.</p>
+<p>To resolve this, one approach is to transfer authority from the server to the client. This allows the client to control its own transform without being overridden by the server.</p>
+<p>To implement this behavior, we can create a <strong>ClientNetworkTransform</strong> component, as seen in the following code example, that switches the server authority for owner authority:</p>
+<p><img src="_page_45_Picture_9.jpeg" alt=""></p>
+<p><img src="_page_46_Picture_0.jpeg" alt=""></p>
+<p>This overrides the OnIsServerAuthoritative method and returns false. On the Player NetworkObject prefab, replace the NetworkTransform with the custom ClientNetworkTransform.</p>
+<p>Similarly, we can also create a client-driven NetworkAnimator:</p>
+<p><img src="_page_46_Figure_4.jpeg" alt=""></p>
+<p>Replace the NetworkAnimator with the <strong>ClientNetworkAnimator</strong>. Remember to set the Animator field in the Inspector.</p>
+<table>
+<thead>
+<tr>
+<th>C &gt; Character Controller<br>0<br>北<br>0<br>北<br>&gt; Third Person Controller (Script)<br>@<br>14<br>V Animator<br>1<br>@<br>北<br>- Starter Assets Inputs (Script)<br>0<br>2<br>(1)<br>V Player Input<br>@<br>#<br>V Network Object<br>2<br>0<br>北<br>Client Player Move (Script)<br>@<br>Client Network Transform (Script)<br>2<br>Syncing<br>Position<br>VX<br>Rotation<br>××<br>VY<br>Z<br>Scale<br>X<br>TY<br>Thresholds<br>Position Threshold<br>0.001<br>Rot Angle Threshold<br>0.01<br>Scale Threshold<br>0.01<br>Delivery<br>Use Unreliable Deltas<br>Configurations<br>In Local Space<br>1<br>Interpolate<br>100<br>Slerp Position<br>Use Quaternion Synchronization<br>Use Half Float Precision<br>0<br>22<br>Client Network Animator (Script)<br>&gt; PlayerArmature_Networked (Animator)</th>
+<th>1<br>Transform</th>
+<th>@</th>
+<th>2</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>Animator</td>
+<td></td>
+<td></td>
+<td>O</td>
+</tr>
+</tbody>
+</table>
+<p>The ClientNetworkTransform and ClientNetworkAnimator.</p>
+<p><span id="page-47-0"></span>In Multiplayer Play Mode, you can now move the player from the client and its position and animation states should sync properly to the host.</p>
+<p>Client-driven behaviors are also a way to reduce latency in networked applications. In &quot;owner authoritative mode,&quot; networked behaviors can act immediately and responsively. The client doesn&#39;t need to wait for a packet to make a round trip to the server and back.</p>
+<p>However, exercise care when creating such client-driven behaviors: they can improve the user experience for each player, but also introduce security risks. Owner authoritative mode opens your application to mods or hacks; in any online competitive game, players will cheat if given the chance. To prevent this and make your application more secure, opt for server authority.</p>
+<h4 id="-owner-authoritative-mode-components-"><strong>Owner authoritative mode components</strong></h4>
+<p>Though you can create the scripts in the above examples yourself, you can also get prebuilt ClientNetworkTransform and ClientNetworkAnimator components from the Multiplayer Samples Utilities package in the Unity project, <em><a href="https://unity.com/demos/small-scale-coop-sample">Boss Room</a></em>. (com.unity. multiplayer.samples.coop).</p>
+<p>Note that this implementation of the ClientNetworkTransform comes with potential issues:</p>
+<ul>
+<li><strong>Ownership transfer</strong>: Ownership doesn&#39;t always switch smoothly, sometimes causing objects to jump or even get out of sync.</li>
+<li><strong>Hierarchical ownership:</strong> There&#39;s no support for a ClientNetworkTransform as a child under a server-managed NetworkTransform.</li>
+<li><strong>Update rejection:</strong> Servers can&#39;t reject updates from clients since the system only recognizes client ownership, not joint client-server ownership.</li>
+<li><strong>Object movement at instantiation</strong>: The server can&#39;t move an object when it&#39;s first created under client ownership.</li>
+</ul>
+<p>In many cases, the ClientNetworkTransform can be a viable way to handle client ownership transforms. However, consider these limitations before implementing them as part of your project.</p>
+<h2 id="syncing-with-server-authority">Syncing with server authority</h2>
+<p>Though you can allow some client authority for responsive gameplay, some movements can only be done on the server side. Generally, you should use server authority to prevent any potential imbalances or unfair advantages that could arise from client-controlled actions.</p>
+<p>For instance, allowing clients to choose their spawn locations on the game map could give them an undue advantage, depending on the layout of the map. Instead, it&#39;s more equitable to have the server randomly assign them to one of a set of predetermined spawn points.</p>
+<p>To manage this, define some objects with some simple visuals and then scatter them where you want players potentially to spawn.</p>
+<p><img src="_page_48_Picture_2.jpeg" alt=""></p>
+<p>Spawn points are strategically placed throughout the level.</p>
+<p>A non-networked MonoBehaviour can manage them. Here, the ServerPlayerSpawnPoints class contains a list called m_SpawnPoints that references each spawn point GameObject.</p>
+<p>This sample implementation also uses a generic singleton pattern, borrowed from the Unitymade Asset Store project <em><a href="https://assetstore.unity.com/packages/essentials/tutorial-projects/level-up-your-code-with-design-patterns-and-solid-289616">Level up your code with design patterns and SOLID</a></em>:</p>
+<pre><code><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ServerPlayerSpawnPoints</span> : <span class="hljs-type">Singleton</span>&lt;<span class="hljs-type">ServerPlayerSpawnPoints</span>&gt;</span>
+{
+ [SerializeField]
+ <span class="hljs-keyword">private</span> List&lt;GameObject&gt; m_SpawnPoints;
+ <span class="hljs-keyword">public</span> GameObject GetRandomSpawnPoint()
+ {
+ <span class="hljs-keyword">if</span> (m_SpawnPoints.Count == <span class="hljs-number">0</span>)
+ <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;
+ <span class="hljs-keyword">return</span> m_SpawnPoints[Random.Range(<span class="hljs-number">0</span>, m_SpawnPoints.Count)];
+ }
+}
+</code></pre><p>A NetworkBehaviour called ServerPlayerMove can then use the instance of ServerPlayerSpawnPoints to pick a spawn point at random.</p>
+<p><img src="_page_49_Picture_0.jpeg" alt=""></p>
+<pre><code><span class="hljs-keyword">using</span> Unity.Netcode;
+<span class="hljs-keyword">using</span> UnityEngine;
+[DefaultExecutionOrder(<span class="hljs-number">0</span>)] <span class="hljs-comment">// Execute before ClientNetworkTransform</span>
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">ServerPlayerMove</span> : <span class="hljs-title">NetworkBehaviour</span>
+{
+ <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-keyword">void</span> <span class="hljs-title">OnNetworkSpawn</span>(<span class="hljs-params"></span>)
+ </span>{
+ <span class="hljs-comment">// Only execute on the Server</span>
+ <span class="hljs-keyword">if</span> (!IsServer)
+ {
+ enabled = <span class="hljs-literal">false</span>;
+ <span class="hljs-keyword">return</span>;
+ }
+ SpawnPlayer();
+ <span class="hljs-keyword">base</span>.OnNetworkSpawn();
+ }
+ <span class="hljs-comment">// Move to the next available position when spawning</span>
+ <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">SpawnPlayer</span>(<span class="hljs-params"></span>)
+ </span>{
+ <span class="hljs-keyword">var</span> spawnPoint = ServerPlayerSpawnPoints.Instance.GetRandomSpawnPoint();
+ <span class="hljs-keyword">var</span> spawnPosition = spawnPoint ? spawnPoint.transform.position : Vector3.zero;
+ transform.position = spawnPosition;
+ }
+}
+</code></pre><p>All of the logic happens in OnNetworkSpawn. Every time a client connects, a call to SpawnPlayer starts the player at a randomly selected spawn. The IsServer check makes sure that this only happens on the server, which maintains the authoritative game state.</p>
+<p>Add the ServerPlayerMove script to the PlayerArmature_Networked prefab. When you enter Multiplayer Play Mode, each client will connect and spawn at a random point within the playground environment.</p>
+<p>This implementation shows how NetworkBehaviours can interact with elements in the scene that aren&#39;t network-controlled. Here, it leverages static data and scene objects already set up in the Hierarchy.</p>
+<p>When a client connects, the ServerPlayerMove only needs to retrieve one random spawn point from the existing gameplay scene. This limits the amount of data transmitted over the network.</p>
+<p><img src="_page_50_Picture_1.jpeg" alt=""></p>
+<p>The player appears at a random spawn point.</p>
+<p>Some important points:</p>
+<ul>
+<li>Because the ClientNetworkTransform is owner authoritative, it&#39;s important to disable the CharacterController component during Awake. Re-enable the CharacterController after ServerPlayerMove positions the player to prevent it from overriding the calculated values and resetting to world center.</li>
+<li>Likewise, fill out the m_SpawnPoints in the Inspector to prevent the players from spawning at (0,0,0).</li>
+<li>Set the DefaultExecutionOrder attribute with a lower value to ensure that ServerPlayerMove executes before ClientPlayerMove. For example, using [DefaultExecutionOrder(0)] prioritizes ServerPlayerMove, allowing it to run first.</li>
+</ul>
+<p>Our multiplayer project now has the capability of connecting multiple clients to a host. In the game, third-person player characters are able to spawn at designated positions within the level and synchronize their movements and animations in real-time.</p>
+<p>This synchronization is essential for the multiplayer experience. Components such as NetworkTransform and NetworkAnimator facilitate this process right out of the box, but for gameplay, you&#39;ll need to customize your own NetworkBehaviours as well.</p>
+<p><span id="page-51-0"></span><img src="_page_51_Picture_0.jpeg" alt=""></p>
+<p>Next, let&#39;s explore additional methods for synchronizing data and game states across the network.</p>
+<h4 id="-singleton-design-pattern-"><strong>Singleton design pattern</strong></h4>
+<p>A singleton provides a convenient means of accessing a unique instance of a particular type at runtime. However, singletons can introduce extra dependencies, so be aware of their drawbacks.</p>
+<p>In Netcode for GameObjects, you&#39;ll use singletons every time you refer to the NetworkManager.Singleton. The sample project also includes an example of a generic singleton for use with any MonoBehaviour type.</p>
+<p>For a deeper understanding of singletons, refer to the e-book <em><a href="https://unity.com/resources/design-patterns-solid-ebook">Level up your code with</a>  <a href="https://unity.com/resources/design-patterns-solid-ebook">design patterns and SOLID</a></em>. This guidebook also demonstrates alternative patterns like events or event channels for object communication in your scene.</p>
+<p><img src="_page_51_Picture_7.jpeg" alt=""></p>
+<h1 id="-span-id-page-52-0-span-network-synchronization"><span id="page-52-0"></span>Network synchronization</h1>
+<p>Network synchronization is essential for maintaining a consistent – and fair – gaming experience for all players.</p>
+<p>You&#39;ve already seen how to synchronize player movements and animations with the Player NetworkObject using a client-driven model. However, gameplay often involves more than just the player character. Depending on your game design, your player may need to shoot projectiles, open doors, or interact with other scene objects. These interactions will need to be networkable, with their own game states that need to be synced between the clients and the server.</p>
+<p>In this section, we will set up client-server communication for gameplay actions, where the player may interact with part of the game environment. This involves implementing networked game states and sending <a href="https://docs-multiplayer.unity3d.com/netcode/current/advanced-topics/messaging-system/">remote procedure calls (RPCs)</a> to and from the server.</p>
+<h1 id="gameplay-mechanic">Gameplay mechanic</h1>
+<p>To illustrate server-client communication, let&#39;s recreate a simple game mechanic.</p>
+<p>Let&#39;s start by adding Trigger Colliders to the game level that change color when making contact with a player. They can change one color when one player touches it and another color when a different player touches it.</p>
+<p>In the scene, create a new GameObject (e.g., a cube). Add a BoxCollider component and enable the IsTrigger option. Create and assign a transparent material to the MeshRenderer (this example uses the URP/Lit shader). Set its initial color to something neutral like white.</p>
+<p><span id="page-53-0"></span><img src="_page_53_Picture_1.jpeg" alt=""></p>
+<p>The trigger will receive a networked color value.</p>
+<p>Next, we need to add network synchronization. Let&#39;s use NetworkVariables and RPCs to synchronize the color change across the network.</p>
+<h1 id="define-a-networkvariable">Define a NetworkVariable</h1>
+<p>A NetworkVariable is a specialized variable designed for synchronized state management across the network. Changes to a NetworkVariable on the server propagate to all clients. This is ideal for continuously synchronized data, such as positions, health points, or in this case, the color state of the trigger.</p>
+<p>We&#39;ll create a NetworkBehaviour called ColorTrigger and attach it to the trigger object. This script will contain a NetworkVariable called m_NetworkColor that contains a Color value.</p>
+<pre><code><span class="hljs-keyword">using</span> UnityEngine;
+<span class="hljs-keyword">using</span> Unity.Netcode;
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">ColorTrigger</span> : <span class="hljs-title">NetworkBehaviour</span>
+{
+ <span class="hljs-keyword">public</span> NetworkVariable&lt;Color&gt; m_NetworkColor = <span class="hljs-keyword">new</span> NetworkVariable&lt;Color&gt;(Color.
+white);
+ <span class="hljs-keyword">private</span> Material m_InstanceMaterial;
+ <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-keyword">void</span> <span class="hljs-title">OnNetworkSpawn</span>(<span class="hljs-params"></span>)
+ </span>{
+ m_NetworkColor.OnValueChanged += OnColorChanged;
+ MeshRenderer meshRenderer = GetComponent&lt;MeshRenderer&gt;();
+ <span class="hljs-keyword">if</span> (meshRenderer != <span class="hljs-literal">null</span>)
+ {
+ m_InstanceMaterial = <span class="hljs-keyword">new</span> Material(meshRenderer.material);
+ meshRenderer.material = m_InstanceMaterial;
+ UpdateMaterialColor(m_NetworkColor.Value);
+ }
+ }
+</code></pre><p><img src="_page_54_Figure_1.jpeg" alt=""></p>
+<p>When a player enters the trigger, this script will toggle the base color property of its material instance. The script uses a NetworkVariable called m_NetworkColor.</p>
+<p>Here&#39;s a breakdown of how this works:</p>
+<ul>
+<li>This NetworkVariable keeps track of the actual color value and then syncs across all clients. Though the script runs on both the server and the clients, by default, only the server has write permissions to the NetworkVariable. Clients can only read its Color value.</li>
+<li>The OnValueChanged event updates the trigger&#39;s material base color whenever the NetworkVariable changes. The script subscribes to the event in OnNetworkSpawn and unsubscribes in OnNetworkDespawn.</li>
+</ul>
+<p>While a NetworkTransform is specific to syncing transform data (position, rotation, scale), a NetworkVariable can sync more general data types, including primitive types, custom structs, and other data necessary for game state management.</p>
+<p>When working on a client, you can&#39;t change the NetworkVariable directly because it is serverauthoritative. Instead, the client must notify the server to make any changes. The server updates the state and propagates it back, and only then does the client see the change take effect.</p>
+<p>To handle communication for changes like this, we use an RPC. RPCs can allow one device to require another device to perform specific actions or updates. RPCs can be called from the client to the server, or vice versa.</p>
+<p><span id="page-55-0"></span>Let&#39;s look at how to implement an RPC for this purpose.</p>
+<p><img src="_page_55_Figure_2.jpeg" alt=""></p>
+<p>A server RPC runs remotely from the client to the server.</p>
+<h1 id="adding-an-rpc">Adding an RPC</h1>
+<p>RPCs allow you to invoke functions on the server or other clients remotely. Methods marked with [Rpc(SendTo.Server)] are called on the server from a client, and those marked with [Rpc(SendTo.Client)] are called on clients from the server. You can also use the legacy syntax [ServerRpc] or [ClientRpc] to indicate a server RPC or client RPC here.</p>
+<p>RPCs are much like other methods, except they must follow a few conventions:</p>
+<ul>
+<li><strong>Rpc attribute:</strong> Annotate your method with the [Rpc] attribute and specify a possible target, e.g., [Rpc(SendTo.Server)] will call the method only on the server.</li>
+<li><strong>Naming convention:</strong> End the method name with the suffix &quot;Rpc&quot; e.g., DoSomethingRpc.</li>
+</ul>
+<p>RPCs are better suited for discrete events, such as player actions or specific game state changes that do not need continuous synchronization.</p>
+<p>Append these methods to the TriggerColor script:</p>
+<p><img src="_page_55_Figure_11.jpeg" alt=""></p>
+<p><img src="_page_56_Picture_0.jpeg" alt=""></p>
+<p><img src="_page_56_Figure_1.jpeg" alt=""></p>
+<p>In a single-player game, you could add the appropriate logic to OnTriggerEnter. However, in a multiplayer game, you typically handle interactions using client-server communication to ensure that all clients remain in sync.</p>
+<p>Instead of setting the m_NetworkColor value directly, OnTriggerEnter checks if the current game instance is a client. If it is, it calls ChangeColorServerRpc and passes in the OwnerClientId.</p>
+<p>This method determines the new color based on the player&#39;s ID (in this example, even ID numbers become blue, while odd IDs become red) and updates the m_NetworkColor value.</p>
+<p>This change is propagated to all connected clients, ensuring every game instance has a consistent view of the game state. When the m_NetworkColor changes, the OnColorChanged method is triggered on all clients, updating the trigger&#39;s material color.</p>
+<p><img src="_page_56_Picture_6.jpeg" alt=""></p>
+<p>This simple game mechanic shows client-server interactions.</p>
+<h3 id="-span-id-page-57-0-span-trigger-mechanic-"><span id="page-57-0"></span><strong>Trigger mechanic</strong></h3>
+<p>Even though this is a simple example, similar game mechanics can be found in many multiplayer games where the player&#39;s actions can trigger visual changes to the environment. For example:</p>
+<ul>
+<li>In a cooperative puzzle game, players may need to use buttons or triggers to interact with the environment. The visual cues that happen in the game environment serves as a signal for everyone to coordinate their actions.</li>
+<li>In a competitive shooter, players can take control points on the level. These often change color to the team that controls them. Again, this doubles as a visual cue to players to adjust their strategies accordingly.</li>
+<li>In online RPGs, specific areas of the level can trigger buffs, debuffs, or other effects.</li>
+</ul>
+<h1 id="rpcs-versus-networkvariables">RPCs versus NetworkVariables</h1>
+<p>When synchronizing data, choosing between NetworkVariables and RPCs depends on the use case:</p>
+<ul>
+<li>NetworkVariables and NetworkTransforms are ideal for continuously synchronized data, such as positions, health points, or in this case, the color state of the trigger. Here, the color trigger uses a NetworkVariable to store its active color.<ul>
+<li>Use cases: Health points, positional data, game scores</li>
+</ul>
+</li>
+<li>Remote procedure calls (RPCs) are better suited for discrete events, such as player actions or specific game state changes that do not need continuous synchronization. In this example, the RPC notifies all clients when a player enters the trigger zone, prompting the server to change the color based on the player&#39;s ID.<ul>
+<li>Use cases: Player actions (e.g., shooting, using an ability), game events (e.g., spawning, game start, game won)</li>
+</ul>
+</li>
+</ul>
+<p>Both mechanisms are essential for data synchronization in networked games, where NetworkVariables manage ongoing states and RPCs handle specific events and actions. <span id="page-58-0"></span>These gameplay examples can help you determine when to use NetworkVariables or RPCs.</p>
+<table>
+<thead>
+<tr>
+<th>Task/system</th>
+<th>RPCs</th>
+<th>NetworkVariables</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Inventory<br>management</td>
+<td>Notify clients when an item is<br>picked up or used, to be added<br>or removed from the inventory.</td>
+<td>Maintain the current inventory for<br>each player. The inventory can be a<br>NetworkList that syncs the list of items.</td>
+</tr>
+<tr>
+<td>Combat<br>systems</td>
+<td>Execute combat actions like<br>attacks or special moves. An<br>RPC can apply damage and<br>effects.</td>
+<td>Track the health and status of each<br>player. Health points and active<br>status effects can be synced using<br>NetworkVariables.</td>
+</tr>
+<tr>
+<td>Environmental<br>interactions</td>
+<td>Trigger specific actions like<br>opening a door or activating a<br>mechanism.</td>
+<td>Maintain the state of interactive<br>objects, such as whether a door is<br>open or closed.</td>
+</tr>
+<tr>
+<td>Objectives</td>
+<td>Signal the completion of an<br>objective.</td>
+<td>Track ongoing progress toward an<br>objective. Store the number of items<br>collected or completed tasks in a<br>NetworkVariable.</td>
+</tr>
+</tbody>
+</table>
+<p>For a more detailed discussion, see the <a href="https://docs-multiplayer.unity3d.com/netcode/current/learn/rpcvnetvar/">RPC vs NetworkVariable documentation page</a>.</p>
+<h1 id="designing-for-multiplayer">Designing for multiplayer</h1>
+<p>Now that you&#39;re familiar with the basics of netcode, it&#39;s essential to adopt a &quot;networked multiplayer&quot; mindset when creating your games. What might be simple in a single-player game often becomes more complex when we need to incorporate NetworkVariables or RPCs to create the same behavior over multiple devices.</p>
+<p>Plan how you&#39;ll synchronize the states between clients and the server. Use NetworkVariables for continuously synced data and RPCs for discrete events. Then, make sure to minimize network traffic by syncing only what&#39;s necessary.</p>
+<p>While it&#39;s possible to convert a single-player game into a multiplayer game, it&#39;s usually more efficient to design with multiplayer in mind from the start. Decide early which objects and actions will be owned by the server and which can be managed by the clients. While server authority offers the most security and consistency, balance that with client authority to reduce latency for certain actions.</p>
+<p>This latency can be a sore sticking point in building your networked game, so let&#39;s next examine how it impacts the multiplayer experience.</p>
+<p>For some inspiration, see <a href="https://www.youtube.com/watch?v=UiAhrW8i7oA">this Unite 2024 session</a> that explores the most common and significant mistakes in making a multiplayer game, and how to avoid them to improve your chances of success.</p>
+<h1 id="-span-id-page-59-0-span-network-latency-and-performance"><span id="page-59-0"></span>Network latency and performance</h1>
+<p>If you&#39;ve ever played an online game, you likely have firsthand experience with how latency can detract from the experience. Poor bandwidth and unstable networking connections lead to jerky player movement, inconsistent frame rates, and noticeable input lag.</p>
+<p>Now that you understand how clients and servers communicate, you can appreciate why this happens. With the internet filling the gap between your devices, a lot can go wrong. Even with the extra reliability of Unity Transport, UDP packets can get lost, arrive out of order, or get damaged on the way to their destination. These are potential sources of latency, also perceived as lag.</p>
+<h1 id="simulating-latency">Simulating latency</h1>
+<p>To understand and mitigate the effects of latency during development, you can simulate various network conditions in the Unity Editor using either the Debug Simulator in the UnityTransport or Network Simulator.</p>
+<h2 id="-unity-transport-debug-simulator-"><strong>Unity Transport Debug Simulator</strong></h2>
+<p>Adjust the Debug Simulator in the <a href="https://docs.unity3d.com/Packages/com.unity.transport@2.4/manual/index.html">UnityTransport component t</a>o introduce artificial latency, jitter, and packet loss. You can find these settings in the Inspector when selecting the NetworkTransport object in your scene. Set a few values to recreate network congestion:</p>
+<p><strong>Latency:</strong> Add a delay in milliseconds to simulate slower network connections. For example, set latency to 100ms to mimic moderate network delay.</p>
+<p><span id="page-60-0"></span><strong>Jitter:</strong> Introduce variability in latency to simulate fluctuating network conditions. For instance, set jitter to 50ms to see how unstable connections affect gameplay.</p>
+<p><strong>Packet Loss:</strong> Specify a percentage of packets to drop, mimicking poor connection quality. Try setting packet loss to 5% to understand its impact on gameplay.</p>
+<p>Play the game application again to observe how these simulated conditions affect gameplay.</p>
+<table>
+<thead>
+<tr>
+<th>T / Unity Transport</th>
+<th>2</th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Protocol Type</td>
+<td>Unity Transport<br>œ</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Use Web Sockets</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Use Encryption</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Max Packet Queue Size</td>
+<td>128</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Max Payload Size</td>
+<td>6144</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Heartbeat Timeout MS</td>
+<td>500</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Connect Timeout MS</td>
+<td>1000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Max Connect Attempts</td>
+<td>60</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Disconnect Timeout MS</td>
+<td>30000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Debug Simulator</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Packet Delay MS</td>
+<td>2000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Packet Jitter MS</td>
+<td>50</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Packet Drop Rate</td>
+<td>10</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>MUCH FO</td>
+<td>TARREN</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Port</td>
+<td>7777</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>It&#39;s recommended to leave remote connections disabled for local testing to avoid exposing<br>ports on your device.</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Allow Remote Connections?</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Override Bind IP (optional)</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Adjust the Debug Simulator of the Unity Transport.</p>
+<h3 id="-network-simulator-"><strong>Network Simulator</strong></h3>
+<p>The <a href="https://docs-multiplayer.unity3d.com/tools/current/tools-network-simulator/">Network Simulator</a> from the Multiplayer Tools package lets you test less-than-ideal network conditions. This can help you discover and fix issues before they surface in production. It facilitates simulating <a href="https://docs-multiplayer.unity3d.com/tools/current/tools-network-simulator/#network-events">network events,</a> such as network <a href="https://docs-multiplayer.unity3d.com/tools/current/tools-network-simulator/#disconnects">disconnects,</a> <a href="https://docs-multiplayer.unity3d.com/tools/current/tools-network-simulator/#lag-spikes">lag spikes,</a> and <a href="https://docs-multiplayer.unity3d.com/tools/current/tools-network-simulator/#packet-loss">packet loss</a>.</p>
+<table>
+<thead>
+<tr>
+<th>0 0 0</th>
+<th>Multiplayer Tools</th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Multiplayer Tools</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>X<br>Tools</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Network Scene Visualization @</td>
+<td></td>
+<td></td>
+<td>Open</td>
+</tr>
+<tr>
+<td>Available</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Runtime Network Stats Monitor @</td>
+<td></td>
+<td></td>
+<td>Add to scene</td>
+</tr>
+<tr>
+<td>Available</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Network Simulator @</td>
+<td></td>
+<td>Add to scene</td>
+<td></td>
+</tr>
+<tr>
+<td>Available</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Open<br>Network Profiler @</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Available<br>&gt;</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Installed Packages</td>
+<td></td>
+<td></td>
+<td>Package Manager</td>
+</tr>
+<tr>
+<td>· Unity Transport version: 2.1.0 %<br>· Multiplayer Tools version: 2.1.0 %</td>
+<td>· Netcode for GameObjects version: 1.9.1 @</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Install the Network Simulator from the Multiplayer Tools package.</p>
+<p><span id="page-61-0"></span></p>
+<table>
+<thead>
+<tr>
+<th>V Network Simulator</th>
+<th>3</th>
+<th>1</th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Connection Preset Home Broadband [WIFI, Cable, Console, PC]</td>
+<td></td>
+<td></td>
+<td>œ</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Custom Preset<br>None (Network Simulator Preset Asset)</td>
+<td>0</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Parameters</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Built-in connection types cannot be edited.</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Packet Delay Range (ms) 20<br>Glo</td>
+<td></td>
+<td>44</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Packet Delay (+ms)</td>
+<td></td>
+<td>32</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Packet Jitter (±ms)</td>
+<td>12</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Packet Loss (%)</td>
+<td>2</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Packet Loss Interval</td>
+<td>0</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Disconnected<br>Connected<br>· Connection</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Duration of lag spike (ms)</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>100<br>2000<br>5000<br>200<br>500<br>1000</td>
+<td>0</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Trigger</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Network Scenarios</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Connections Cycle<br>Scenario</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Auto Run Scenario</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>V Scenario</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Configurations</td>
+<td>1</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>None<br>Connection Preset</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Scriptable Object Preset None (Network Simulator Preset Asset)</td>
+<td></td>
+<td>0</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Change Interval Millisecond 5000</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>+</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Start</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Test latency in the Network Simulator.</p>
+<h4 id="-other-network-conditioners-"><strong>Other network conditioners</strong></h4>
+<p>The Debug Simulator or the Network Simulator only work in the Editor, however. For runtime builds, alternative network conditioners can be used to simulate latency. Tools such as <a href="https://github.com/jagt/clumsy?tab=readme-ov-file">clumsy</a> for Windows and Network Link Conditioner for macOS/iOS can recreate various network conditions for thorough testing.</p>
+<p>For more information see the <a href="#page-71-0">Testing and Debugging</a> section further on in this guide.</p>
+<p>Dealing with the impact of latency on application performance is one of the biggest challenges in multiplayer development. Fortunately there are some strategies to help mitigate the effects of latency. Let&#39;s explore a few of them here.</p>
+<p><span id="page-62-0"></span><img src="_page_62_Picture_0.jpeg" alt=""></p>
+<h1 id="client-side-interpolation">Client-side interpolation</h1>
+<p>One way to reduce the effects of latency is client-side interpolation. In this method, each client intentionally delays rendering by a short interpolation period, rather than rendering it right away.</p>
+<p>In client-server topology, clients generally render a state that is about half the round-trip time (RTT) behind the server. Client-side interpolation adds an extra intentional delay on top of that.</p>
+<p>By running slightly behind, clients can buffer incoming state updates from the server. When it&#39;s time to render the next update, the client calculates an interpolated state from the two most recent server ticks.</p>
+<p>The buffer allows the client to render regular client updates, even if ticks from the server arrive at a jittered, irregular rate. The interpolated states conceal minor latency or jitter.</p>
+<p><img src="_page_62_Figure_7.jpeg" alt=""></p>
+<p>The client renders interpolated states from a buffer.</p>
+<p>Client-side interpolation is available in Netcode for GameObjects as a flag on the NetworkTransform component. Enabling <strong>Interpolation</strong> interpolates position, rotation, and scale for the associated GameObject.</p>
+<table>
+<thead>
+<tr>
+<th>V Network Transform</th>
+<th></th>
+<th>@ 花</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Syncing</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Position</td>
+<td>VX<br>Y<br>Z<br>V</td>
+<td></td>
+</tr>
+<tr>
+<td>Rotation</td>
+<td>×<br>&gt;<br>Y<br>Z</td>
+<td></td>
+</tr>
+<tr>
+<td>Scale</td>
+<td>X<br>Z<br>- Y</td>
+<td></td>
+</tr>
+<tr>
+<td>Thresholds</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Position Threshold</td>
+<td>0.001</td>
+<td></td>
+</tr>
+<tr>
+<td>Rot Angle Threshold</td>
+<td></td>
+<td>0.01</td>
+</tr>
+<tr>
+<td>Scale Threshold</td>
+<td>0.01</td>
+<td></td>
+</tr>
+<tr>
+<td>Delivery</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Use Unreliable Deltas</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Configurations</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>In Local Space</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Interpolate</td>
+<td>&gt;</td>
+<td></td>
+</tr>
+<tr>
+<td>Slerp Position</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Use Quaternion Synchronization</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Use Half Float Precision</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Client-side interpolation enabled on the NetworkTransform.</p>
+<p><span id="page-63-0"></span><img src="_page_63_Picture_0.jpeg" alt=""></p>
+<p>Just bear in mind that client-side interpolation introduces a slight delay in rendering, which is necessary for the interpolation.</p>
+<h1 id="client-side-prediction-and-anticipation">Client-side prediction and anticipation</h1>
+<p>In our earlier example, the ClientNetworkTransform gives the client direct control over player movement, making the game feel more responsive and instant. However, it&#39;s important to note that client authority is not possible in many games due to a number of factors, such as game design, fairness, and security.</p>
+<h4 id="-why-server-authority-"><strong>Why server authority</strong></h4>
+<p>In competitive games where fair competition is crucial, client authority can give players the ability to cheat or exploit the game by manipulating the client-side code or data. Games with complex player interaction and shared game worlds often require server authority to ensure data integrity, prevent tampering, and maintain a consistent experience for all players. Here, server authority is required to ensure a level playing field and maintain the integrity of the game.</p>
+<p>This means using the standard NetworkTransform component instead of the ownerauthoritative ClientNetworkTransform. This ensures that client input does not control the player; instead, only the server will have control.</p>
+<p><img src="_page_63_Figure_8.jpeg" alt=""></p>
+<p><img src="_page_63_Figure_9.jpeg" alt=""></p>
+<p>Server authority, however, can exacerbate latency. Instead of manipulating an onscreen player directly, each client must send its inputs to the server. The server then processes those inputs to simulate the game and calculates the game state. Only when the client receives the results of that simulation can it display the next frame.</p>
+<p>When using an authoritative server, players perceive latency because of the time it takes for data to travel from the client to the server and back again. In this scenario, clients tend to lag behind the server, especially as your UDP packets need to traverse the internet.</p>
+<p><span id="page-64-0"></span><img src="_page_64_Picture_0.jpeg" alt=""></p>
+<p>For many elements in a game, this lag might be acceptable, but for others, like the player&#39;s character, such lag can ruin the feel of the game and make it difficult to play.</p>
+<h3 id="-how-client-side-prediction-works-"><strong>How client-side prediction works</strong></h3>
+<p>Client-side prediction offers one solution to the lag introduced by server authority. Instead of waiting for the server&#39;s response, the client predicts the game state a fraction of a second into the future and updates the game visually. This is called &quot;prediction&quot; because the client predicts the game state without knowing the true state from the server.</p>
+<p>By doing this, the client can provide instant visual feedback to the player&#39;s actions, making the game feel responsive.</p>
+<p><img src="_page_64_Figure_5.jpeg" alt=""></p>
+<p>Client predicts the game state.</p>
+<p>Simultaneously, the client sends the player&#39;s actions to the server in a packet. The server receives the client&#39;s input packet and simulates the game state using those inputs. The server processes these inputs to simulate the game state, establishing the authoritative game state as the ground truth. The server sends that authoritative state back to the client.</p>
+<p><img src="_page_64_Figure_8.jpeg" alt=""></p>
+<p>The server sends back the authoritative state.</p>
+<p><span id="page-65-0"></span><img src="_page_65_Picture_0.jpeg" alt=""></p>
+<h4 id="-reconciliation-and-rollback-"><strong>Reconciliation and rollback</strong></h4>
+<p>The client then compares the authoritative state with the anticipated state and looks for any differences. If the two states are close enough, then nothing happens and the client continues playing.</p>
+<p>If there is a significant mismatch – also called a &quot;desync&quot; – then, the client must decide how to correct its state to match the server&#39;s authoritative state. This process is called <strong>reconciliation</strong>.</p>
+<p><img src="_page_65_Figure_5.jpeg" alt=""></p>
+<p>The client receives a mismatched state, or &quot;desync.&quot;</p>
+<p>To handle latency and compensate for it, the client stores a history of its inputs and predicted state for a certain number of frames. When a desync occurs, the client can roll back its state to the last known correct state from the server. Then, it re-simulates the game from that point using the correct inputs. This brings the client state back in sync with the server.</p>
+<p><img src="_page_65_Figure_8.jpeg" alt=""></p>
+<p>The client reconciles the desync.</p>
+<p><span id="page-66-0"></span>On any given frame, the client may need to re-simulate several frames, which is why a networked application can be more computationally expensive. This reconciliation and rollback, however, is what helps maintain a smooth and consistent experience for the player even with the presence of network latency.</p>
+<h3 id="-client-side-anticipation-in-netcode-for-gameobjects-"><strong>Client-side anticipation in Netcode for GameObjects</strong></h3>
+<p>Netcode for GameObjects supports client anticipation, a simplified model for handling latency without full client-side prediction and reconciliation. It uses these components:</p>
+<ul>
+<li>AnticipatedNetworkVariable<T> is a generic component used for scalar or simple data types like integers, floats, and colors. It&#39;s suitable for non-transform properties such as health, score, or item states.</li>
+<li>AnticipatedNetworkTransform works similarly to AnticipatedNetworkVariable but is designed for Transform data, including position, rotation, and scale.</li>
+</ul>
+<p>Client anticipation allows the client to provide immediate visual feedback to the user while waiting for the server&#39;s authoritative update. This helps make the game feel more responsive. In our simple ColorTrigger example, when a player changes the color of an object from white to blue, the client can visually update the color immediately while waiting for the server to confirm the change.</p>
+<p>Between the client and server, anticipation would look something like this:</p>
+<p><img src="_page_66_Figure_8.jpeg" alt=""></p>
+<p>The client anticipates the game state.</p>
+<p>AnticipatedNetworkVariable<T> and AnticipatedNetworkTransform both work by separating values into anticipated (visual) and authoritative states.</p>
+<p>Anticipation refers to the client&#39;s predicted state, which provides immediate visual feedback to the player locally. The authoritative state is determined by the server. When the server&#39;s update arrives, the client compares its anticipated state with the authoritative state. If they differ significantly, the client adjusts its state to match the server&#39;s, ensuring consistency across all clients.</p>
+<p><img src="_page_67_Figure_1.jpeg" alt=""></p>
+<p>Client anticipation can ignore stale data.</p>
+<p>Client anticipation also needs to account for &quot;stale data&quot; – updates from the server that reflect actions occurring before the client&#39;s last request. Netcode for GameObjects provides two ways to handle this through the StaleDataHandling property:</p>
+<ul>
+<li>StaleDataHandling.Ignore ignores stale data and keeps the anticipated value. This can be useful if the state is changing rapidly and causing visual flickering.</li>
+<li>StaleDataHandling.Reanticipate treats stale data like any other server update, triggering rollback and re-anticipation, which replays player inputs to maintain consistency.</li>
+</ul>
+<p>To prevent choppy visual updates when server values differ from anticipated values, use the Smooth method available to both components.</p>
+<p>Smooth requires a starting value, a final value, and a duration for the smoothing process. This helps maintain a smooth and responsive visual experience despite network latency.</p>
+<p>While client anticipation improves gameplay responsiveness, this simplified approach may not cover all cases of latency and network issues.</p>
+<p>Note that true rollback and reconciliation require a deterministic physics system, which ensures that the same inputs will always produce the same results (below). This is essential for accurately rolling back and resimulating game states. Without determinism, discrepancies can arise between the server and client simulations.</p>
+<p>Netcode for GameObjects does not support deterministic physics, which is necessary for true client prediction and lag compensation. Instead, Netcode for GameObjects provides a simpler solution that focuses on client anticipation and smoothing. This can improve responsiveness without a full rollback system.</p>
+<h3 id="-span-id-page-68-0-span-deterministic-physics"><span id="page-68-0"></span>Deterministic physics</h3>
+<p>A <a href="https://en.wikipedia.org/wiki/Deterministic_system">deterministic</a> physics system ensures that given the same initial conditions and inputs, the physics simulation will always produce the same results.</p>
+<p>Note that Netcode for GameObjects uses Unity&#39;s built-in physics engine, which is not deterministic. When re-running the simulation with the same inputs, the physics system does not guarantee identical results.</p>
+<p>Netcode for Entities, however, supports <a href="https://docs.unity3d.com/Packages/com.unity.physics@1.3/manual/index.html">Unity Physics</a> and <a href="https://docs.unity3d.com/Packages/com.havok.physics@1.3/manual/index.html">Havok Physics,</a> both of which offer deterministic simulation capabilities. This allows Netcode for Entities to support true client-side prediction.</p>
+<h4 id="-client-side-prediction-in-netcode-for-entities-"><strong>Client-side prediction in Netcode for Entities</strong></h4>
+<p>Netcode for Entities offers advanced tools for handling client-side prediction and lag compensation. The same simulation code runs on both the client and the server for each entity. This allows the client to predict the state of the game based on player inputs, giving immediate feedback without waiting for the server&#39;s response.</p>
+<p>When the client receives the latest snapshot from the server, it updates all the predicted entities with this data. After applying this snapshot, the client runs a simulation called the <a href="https://docs.unity3d.com/Packages/com.unity.netcode@1.4/api/Unity.NetCode.PredictedSimulationSystemGroup.html">PredictedSimulationSystemGroup</a>. This simulation processes from the oldest saved tick to the current target time, rolling back and re-simulating the game state to ensure that the client accurately simulates the game state. This rollback and re-simulation process helps the client correct any discrepancies and maintain synchronization with the server&#39;s authoritative state.</p>
+<p>On the server side, the prediction loop runs once per frame. The server updates the authoritative game state and sends this updated state back to the client.</p>
+<p>The client stores a history of inputs and predicted states. When a desync occurs, the client rolls back to the last correct state from the server and re-simulates the game using the correct inputs. This keeps the client in sync with the server&#39;s &quot;ground truth.&quot;</p>
+<p>Netcode for Entities also supports advanced physics features like:</p>
+<ul>
+<li><a href="https://docs.unity3d.com/Packages/com.unity.netcode@1.4/manual/physics.html#multiple-physics-worlds">Multiple physics worlds</a>: This allows for local-only physics simulations that don&#39;t need to be replicated across the network.</li>
+<li><a href="https://docs.unity3d.com/Packages/com.unity.netcode@1.4/manual/physics.html#interaction-between-predicted-and-client-only-physics-entities">Custom physics proxies</a>: These enable interactions when you would like to make the ghosts interact with physics objects that are present only on the client (ex: debris).</li>
+<li><a href="https://docs.unity3d.com/Packages/com.unity.netcode@1.4/manual/physics.html">Deterministic physics simulation</a>: This ensures that the client and server simulations produce the same results given the same inputs, maintaining consistency between the client and server states.</li>
+</ul>
+<p>The <a href="https://docs.unity3d.com/Packages/com.unity.netcode@1.4/api/Unity.NetCode.GhostPredictionSmoothingSystem.html">GhostPredictionSmoothingSystem</a> helps smooth out prediction errors by transitioning between predicted and authoritative states, with options for custom smoothing.</p>
+<p><img src="_page_69_Picture_0.jpeg" alt=""></p>
+<p>This combination of prediction, rollback, lag compensation, and smoothing techniques minimizes the impact of latency and helps maintain game integrity and responsiveness.</p>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Netcode for GameObjects</th>
+<th>Netcode for Entities</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Prediction<br>Method</td>
+<td>Client anticipation: The client<br>anticipates server responses.</td>
+<td>Full client prediction: The client runs the<br>same simulation code as the server.</td>
+</tr>
+<tr>
+<td>Latency<br>Mitigation</td>
+<td>Anticipates server results and<br>smooths transitions</td>
+<td>Uses rollback and re-simulation to correct<br>desyncs</td>
+</tr>
+<tr>
+<td>Snapshots</td>
+<td>Not explicitly used</td>
+<td>Uses snapshots to represent game state<br>at specific moments in time</td>
+</tr>
+<tr>
+<td>Lag<br>Compensation</td>
+<td>Simplified model with<br>StaleDataHandling options</td>
+<td>Comprehensive lag compensation with a<br>reference to collision worlds</td>
+</tr>
+<tr>
+<td>Physics<br>Interaction</td>
+<td>Limited to client-side<br>prediction with anticipated<br>transforms</td>
+<td>Supports interaction between predicted<br>and client-only physics worlds</td>
+</tr>
+<tr>
+<td>Smoothing</td>
+<td>Uses the Smooth method for<br>anticipated values</td>
+<td>GhostPredictionSmoothingSystem for<br>smoothing transitions between predicted<br>and authoritative states</td>
+</tr>
+<tr>
+<td>Use Case</td>
+<td>Suitable for simpler games<br>requiring immediate visual<br>feedback</td>
+<td>Suitable for complex games requiring<br>accurate state synchronization</td>
+</tr>
+</tbody>
+</table>
+<p>Compare how Netcode for GameObjects and Netcode for Entities handle client prediction:</p>
+<p>Both Netcode for GameObjects and Netcode for Entities provide mechanisms to handle client prediction and mitigate latency issues encountered during multiplayer networking. While Netcode for GameObjects offers a simplified model using client anticipation, Netcode for Entities provides a more advanced system with full prediction, rollback, and lag compensation.</p>
+<h4 id="-netcode-for-entities-terms-"><strong>Netcode for Entities terms</strong></h4>
+<p>Netcode for Entities uses the <a href="https://docs.unity3d.com/Packages/com.unity.entities@1.3/manual/index.html">Entity Component System (ECS)</a> and Data-Oriented Technology Stack (DOTS), which differ from the MonoBehaviour workflow used in Netcode for GameObjects. Here are some terms that may be new:</p>
+<p><strong>Entity</strong>: In ECS, an entity is a basic unit of data representing individual GameObjects or components within the game. Entities are lightweight and contain no behavior, only data.</p>
+<p><strong>Game world</strong>: The game world refers to the entire environment in which the game takes place. It includes all the entities, their states, and the rules governing their interactions.</p>
+<p><strong>Collision world:</strong> The collision world is the state of all physical objects in the game world, including their positions, velocities, and interactions. It is used for collision detection and physics simulations.</p>
+<p><strong>Snapshot</strong>: A <a href="https://docs.unity3d.com/Packages/com.unity.netcode@1.0/manual/ghost-snapshots.html">snapshot</a> (also called &quot;ghost snapshot&quot;) is a set of data representing the game state at a specific moment in time. Clients and servers periodically stay in sync by updating the game state via snapshots.</p>
+<p><strong>Ghost</strong>: A <a href="https://docs.unity3d.com/Packages/com.unity.netcode@1.2/manual/ghost-spawning.html">ghost</a> is a networked entity that is replicated across clients and the server. Every frame, the server sends a snapshot of the current state of all ghosts to the client. Ghosts are used to synchronize the state of entities between the server and clients, ensuring that all players have a consistent view of the game world.</p>
+<p><strong>Predicted ghost:</strong> A predicted ghost is a client-side entity simulated locally to provide instant visual feedback for player actions, reducing perceived latency. Use these for entities that are directly controlled by the player or other interactive entities that need immediate feedback.</p>
+<p><strong>Interpolated ghost:</strong> An interpolated ghost is a representation of a server-side entity on a client. The client displays its state based on snapshots received from the server, blending them to minimize jitter caused by latency. Use these for entities not controlled directly by the player that don&#39;t require immediate feedback, like other players&#39; characters, NPCs, or server-controlled entities.</p>
+<h1 id="-span-id-page-71-0-span-testing-and-debugging-networked-games"><span id="page-71-0"></span>Testing and debugging networked games</h1>
+<p>Testing and debugging your multiplayer games works differently than their single-player counterparts. Be aware of the general workflow for your netcode projects:</p>
+<ul>
+<li><strong>Local testing</strong> runs multiple instances of the game to assess the interaction between players. Use player builds, the Multiplayer Play Mode package, and Network Scene Visualization to develop your application.</li>
+<li><strong>Simulate network conditions</strong> with scripts or the NetcodeTransport component. This can recreate latency, jitter, and packet loss to mimic real-world network issues.</li>
+<li><strong>Client-connection management</strong> handles behaviors for joining, reconnecting, and disconnecting clients.</li>
+<li><strong>Logging</strong> uses the debug tools to monitor troubleshoot issues.</li>
+<li>A <strong>command line helper</strong> launches game instances with specific roles and network conditions to automate testing.</li>
+</ul>
+<h1 id="local-testing">Local testing</h1>
+<p>Developing multiplayer games relies on local testing, where you simulate multiple instances of the game to mimic how different players interact in networked conditions.</p>
+<h4 id="-player-builds-"><strong>Player builds</strong></h4>
+<p>Player builds allow for hosting and joining games by running multiple instances of the game executable. You can also run these alongside the Unity Editor, enabling simultaneous hosting and joining of games on a single device to simulate multiplayer scenarios.</p>
+<p><span id="page-72-0"></span><img src="_page_72_Picture_0.jpeg" alt=""></p>
+<h3 id="-multiplayer-play-mode-mppm-"><strong>Multiplayer Play Mode (MPPM)</strong></h3>
+<p>Included in Unity 6, the <a href="https://docs-multiplayer.unity3d.com/mppm/0.6.0/about/#:~:text=You%20can%20use%20Multiplayer%20Play,same%20source%20assets%20on%20disk.">Multiplayer Play Mode (MPPM)</a> package enables the simulation of up to four players on a single development device using the same source assets. This feature eliminates the need for separate player builds, reducing build times during testing.</p>
+<h4 id="-macos-users-"><strong>macOS users</strong></h4>
+<p>For macOS users, running multiple instances of an app requires command line commands. Use the open command at the terminal to launch a separate instance of your application.</p>
+<p>For example, at the Terminal, execute open -n YourAppName.app to launch a separate instance of the YourAppName application.</p>
+<h2 id="simulating-network-conditions">Simulating network conditions</h2>
+<p>When testing locally, all game instances run on the same network interface. There will be little to no latency between the clients, so you&#39;ll need to introduce artificial conditions to simulate a real-world environment.</p>
+<p>Latency, jitter, and packet loss can impact gameplay. Testing your application with less than ideal network conditions can ensure that your final build performs well over the internet.</p>
+<p>Determining which conditions to test depends on factors such as target platform, region, and the design of your game. As a starting point, use latency values around 100-150 ms for desktop and 200-300 ms for mobile, along with 5-10% packet loss. Testing with jitter and packet loss is essential, as it introduces realistic instability. See this <a href="https://docs-multiplayer.unity3d.com/netcode/current/tutorials/testing/testing_with_artificial_conditions/#how-much-lagpacket-lossjitter-should-we-use">documentation page</a> for more guidelines.</p>
+<p>For testing locally within the Editor, you can use the <a href="https://docs-multiplayer.unity3d.com/tools/current/tools-network-simulator/">Network Simulator</a> tool from the Multiplayer Tools along with Multiplayer Play Mode.</p>
+<p>For testing development builds, we suggest using the Network Simulator tools with some <a href="https://docs-multiplayer.unity3d.com/netcode/current/tutorials/testing/testing_with_artificial_conditions/#debug-builds">custom code to inject adverse network conditions</a> into the build (the Network Simulator window only works in the Editor).</p>
+<p>For testing release builds, we suggest using <a href="https://jagt.github.io/clumsy/">clumsy</a> if you&#39;re on Windows and Network Link Conditioner if you&#39;re on macOS or iOS. A scriptable alternative to Network Link Conditioner on macOS is <a href="https://manpagez.com/man/8/dnctl/">dummynet</a>, which offers great control and comes packaged with the operating system.</p>
+<p>See <a href="https://docs-multiplayer.unity3d.com/netcode/current/tutorials/testing/testing_with_artificial_conditions/#system-wide-network-conditioners">System-wide network conditioners</a> for full details.</p>
+<p><span id="page-73-0"></span><img src="_page_73_Picture_0.jpeg" alt=""></p>
+<h1 id="testing-client-connections">Testing client connections</h1>
+<p>Testing client connection management in a networked game is important to avoid bugs and provide a smooth gaming experience. Here are some things to test and watch out for:</p>
+<h4 id="-clients-connecting-"><strong>Clients connecting:</strong></h4>
+<ul>
+<li>Test cases can include clients joining new game sessions, rejoining after leaving or hosting, late-joining ongoing games, and handling denied connections.</li>
+<li>Consider if the client&#39;s previous state affects connection and if the game state replicates correctly from the server.</li>
+<li>Check if the server handles reconnections or late-joining properly.</li>
+</ul>
+<h3 id="-clients-disconnecting-"><strong>Clients disconnecting:</strong></h3>
+<ul>
+<li>Test graceful client shutdowns, timeouts, and the impact of losing connection to the host/server.</li>
+<li>Ensure objects tied to the game session reset properly if not destroyed, and that clients can reconnect to a new game.</li>
+</ul>
+<h3 id="-host-server-starting-the-session-"><strong>Host/Server starting the session:</strong></h3>
+<ul>
+<li>Test starting new game sessions and after shutting down previous sessions, especially in client-hosted games.</li>
+<li>Consider if the application&#39;s state before starting a new session affects the game.</li>
+</ul>
+<h4 id="-host-server-shutting-down-"><strong>Host/Server shutting down:</strong></h4>
+<ul>
+<li>Test graceful shutdowns of the host/server, especially when using external services like Unity Game Services or lobby services.</li>
+<li>Ensure clients are notified of the shutdown, and external services are properly informed.</li>
+</ul>
+<p>Thorough attention to these test cases can help maintain a stable and enjoyable networked gaming experience.</p>
+<p>For more specifics, see <a href="https://docs-multiplayer.unity3d.com/netcode/current/tutorials/testing/testing_client_connection_management/">Testing Client Connection Management</a>.</p>
+<h1 id="-span-id-page-74-0-span-techniques-for-debugging-multiplayer-games"><span id="page-74-0"></span>Techniques for debugging multiplayer games</h1>
+<p>When debugging multiplayer games, all conventional game development wisdom applies. However, certain scenarios that are typical to multiplayer game development call for special tricks and approaches.</p>
+<p>Below is a list of techniques that may help you when developing multiplayer games with Unity:</p>
+<ul>
+<li><strong>Debug drawing techniques:</strong> Use debug lines from <a href="https://docs.unity3d.com/6000.0/Documentation/ScriptReference/Debug.DrawRay.html">Debug.DrawRay</a> and <a href="https://docs.unity3d.com/6000.0/Documentation/ScriptReference/Debug.DrawLine.html">Debug.DrawLine</a> to indicate network positions, movement intentions, and objection interactions. They are useful when combined with side-by-side recordings of multiplayer gameplay.</li>
+<li><strong>Netcode-enabled Line Renderer:</strong> Sometimes it&#39;s useful to have visual feedback that shows a specific direction, value, or any other useful debug metric pertinent to your project. See this example script for implementing a <a href="https://docs-multiplayer.unity3d.com/netcode/current/tutorials/testing/techniques_and_tricks_for_debugging_multiplayer_games/#a-netcode-enabled-line-renderer">Netcode-enabled Line Renderer</a>.</li>
+<li><strong>Text-Based logging:</strong> Text-based logging can track non-visual events (such as RPCs) and information. Include network tick and client id in log messages to make it easier to build a timeline when reading the logs.</li>
+<li><strong>Network conditioning</strong>: Use the Network Simulator tools for application-level network conditioning. This can simulate artificial network conditions and help test for errors specific for latency, jitter, and packet loss. Read more at <a href="https://docs-multiplayer.unity3d.com/netcode/current/tutorials/testing/testing_with_artificial_conditions/#system-wide-network-conditioners">System-wide network</a>  <a href="https://docs-multiplayer.unity3d.com/netcode/current/tutorials/testing/testing_with_artificial_conditions/#system-wide-network-conditioners">conditioners</a>.</li>
+<li><strong>Screen recordings:</strong> Record both client and server instances simultaneously to compare real-time gameplay. In debug builds, be sure to stamp each frame with the client ID and the current frame number; this provides a visual reference for a side-by-side comparison.</li>
+<li><strong>Increasing fixed timestep:</strong> Despite using good debug rendering and logging, it can be hard sometimes to understand what&#39;s going on – even when going through the frames one by one. Increasing the <strong>FixedTimeStep</strong> setting to a large value (for example, 0.2) can provide extra clarity into the game&#39;s behavior during each frame.</li>
+<li><strong>Using Breakpoints:</strong> When using breakpoints to debug a game, your connection may time out if you stay too long in this mode. Since it pauses your game, you can temporarily increase the timeout value to avoid disconnecting.</li>
+</ul>
+<p>See this guide on <a href="https://docs-multiplayer.unity3d.com/netcode/current/tutorials/testing/techniques_and_tricks_for_debugging_multiplayer_games/">Techniques and tricks for debugging multiplayer games</a> for more tips and techniques.</p>
+<p><span id="page-75-0"></span><img src="_page_75_Picture_0.jpeg" alt=""></p>
+<h1 id="command-line-helper">Command line helper</h1>
+<p>Repeatedly launching and testing multiplayer builds from within the Unity Editor can be timeconsuming. Consider using a command-line tool to automate launching and testing multiplayer game builds outside of the Editor environment.</p>
+<p>This sample <a href="https://docs-multiplayer.unity3d.com/netcode/current/tutorials/command-line-helper/">NetworkCommandLine</a> script can help you get started. Attach the NetworkCommandLine component to a GameObject to ensure that the script is included in your build and can be accessed via the command line.</p>
+<p>In the <strong>Player Settings</strong>, beneath Settings for <strong>PC, Mac, &amp; Linux Standalone</strong>, select <strong>Resolution and Presentation</strong>. Set the <strong>Resolution</strong> to <strong>Windowed</strong>. This will make it easier to test multiple instances of your game side by side.</p>
+<p>The NetworkCommandLine script should first check if the game is running outside the Editor. If so, it should read the command-line arguments to determine the desired mode (server, host, or client) and start the corresponding services. This will allow you to launch your game build with specific network roles from the command line.</p>
+<p>Build a binary from <strong>File &gt; Build Settings</strong> then test at the command line.</p>
+<h4 id="-on-windows-"><strong>On Windows:</strong></h4>
+<p>Open the Command Prompt and navigate to the directory where you saved your build. Use specific commands to start the server or client instances of your game, adjusting the paths as necessary. For example:</p>
+<p><Path to Project>\HelloWorld.exe -mode server <Path to Project>\HelloWorld.exe -mode client</p>
+<h4 id="-on-macos-"><strong>On macOS:</strong></h4>
+<p>On macOS, open the Terminal and use similar commands as mentioned above, but adjust the paths to match the macOS directory structure. For example:</p>
+<p><Path to Project>/HelloWorld.app/Contents/MacOS/<Project Name> -mode server <Path to Project>/HelloWorld.app/Contents/MacOS/<Project Name> -mode client</p>
+<p>Optionally, you can log the output of your game instances to text files for easier tracking and analysis with the <strong>-logfile</strong> flag.</p>
+<h1 id="-span-id-page-76-0-span-multiplayer-services"><span id="page-76-0"></span>Multiplayer Services</h1>
+<ul>
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+</ul>
+<p><span id="page-77-0"></span><img src="_page_77_Picture_0.jpeg" alt=""></p>
+<p>Unity provides a number of services that can simplify your networked multiplayer development. Start learning about each service by looking at the <a href="https://docs.unity.com/ugs/en-us/manual/mps-sdk/manual">documentation for the</a>  <a href="https://docs.unity.com/ugs/en-us/manual/mps-sdk/manual">Multiplayer Services package</a>, which simplifies the work it takes to manage dependencies across multiplayer services. For example, you can:</p>
+<ul>
+<li>Quickly add multiplayer elements that integrate Unity Gaming Services into your game. Set up Lobby, Relay, Distributed Authority, Matchmaker and Multiplay Hosting.</li>
+<li>A new session system provides a simple shared cloud-side backing for a multiplayer game loop that groups players together and manages a shared session/player state.</li>
+<li>Create and manage peer-to-peer (P2P), Dedicated Game Server, and Distributed Authority hosted online sessions. Players can join sessions through matchmaking, a Join Code, or by browsing a list of active sessions.</li>
+</ul>
+<p>Let&#39;s take a brief look at each of the services:</p>
+<h2 id="matchmaker">Matchmaker</h2>
+<p><strong>Matchmaking</strong> is the process of connecting players with other players or game sessions based on specified criteria, such as skill level or geographic location, to ensure a balanced and enjoyable game experience.</p>
+<p>Implementing Unity&#39;s <a href="https://docs.unity.com/ugs/en-us/manual/matchmaker/manual/matchmaker-overview">Matchmaker</a> service involves several steps:</p>
+<ul>
+<li><strong>Define matchmaking criteria:</strong> Determine the parameters that will be used to match players. This can include skill level, geographic proximity, latency, and player preferences.</li>
+<li><strong>Player profiles and ratings:</strong> Maintain profiles for each player that include their matchmaking criteria. Use rating systems (e.g., Elo rating) to assess player skill levels and ensure balanced matches.</li>
+<li><strong>Matchmaking requests:</strong> When a player requests a match, the matchmaking service searches for suitable opponents or teammates based on the defined criteria. This involves querying a pool of available players and finding the best possible match.</li>
+<li><strong>Match assignment:</strong> Once a suitable match is found, players are assigned to a game session. The service ensures that all players are connected and ready to start the game.</li>
+<li><strong>Dynamic adjustments:</strong> If specific criteria cannot be met, the matchmaking service can adjust its parameters dynamically to ensure that matches are made promptly without compromising too much on quality.</li>
+</ul>
+<p>Use Unity&#39;s Matchmaking to create fair and competitive matches by considering these factors.</p>
+<p><span id="page-78-0"></span><img src="_page_78_Picture_0.jpeg" alt=""></p>
+<h1 id="lobby">Lobby</h1>
+<p>Lobbies are pre-game areas where players can gather, configure game settings, and prepare to start the game. The <a href="https://docs.unity.com/ugs/manual/lobby/manual/unity-lobby-service">Lobby</a> service provides a way for players to discover and connect to each other for various multiplayer gaming scenarios. Some common examples include:</p>
+<ul>
+<li>Browsing a list of available game sessions to select and join one</li>
+<li>Sharing a <a href="https://docs.unity.com/ugs/manual/relay/manual/join-codes">join code</a> with your friend to allow them to connect to your game session</li>
+<li>Using <a href="https://docs.unity.com/ugs/en-us/manual/lobby/manual/quick-join">Quick Join</a> to find any available match and jump in</li>
+<li><a href="https://docs.unity.com/ugs/en-us/manual/lobby/manual/create-a-lobby">Creating a public or private lobby</a> and sending invites to your in-game friends list</li>
+<li>Hosting a lobby from a game server to manage and restrict access to the server session</li>
+<li><a href="https://docs.unity.com/ugs/en-us/manual/lobby/manual/query-for-lobbies">Query for lobbies</a> that match specific requirements (e.g. game mode, map type)</li>
+</ul>
+<p>The <a href="https://github.com/Unity-Technologies/com.unity.services.samples.game-lobby">Game lobby sample</a> demonstrates how to use the Lobby and Relay packages to create a typical game lobby experience, including Vivox Voice chat. Players can host lobbies that other players can join using a public lobby list or lobby code. They can then connect via Relay to use Unity Transport for basic real-time communication.</p>
+<h2 id="relay">Relay</h2>
+<p><a href="https://docs.unity.com/ugs/en-us/manual/relay/manual/introduction">Unity Relay</a> simplified connecting multiple players through a <a href="https://docs.unity.com/ugs/manual/relay/manual/join-codes">join code</a> system. When a host sets up a game session, they generate a unique join code to share with friends or teammates, who use it to connect to the session. This system streamlines the connection process while ensuring privacy by keeping sensitive information like IP addresses hidden.</p>
+<p>In peer-to-peer multiplayer games, connecting clients can be difficult due to network issues like <a href="https://en.wikipedia.org/wiki/Network_address_translation">NAT (Network Address Translation)</a> and firewalls. Direct connections often require complex network configurations and expose players&#39; IP addresses, raising security and privacy concerns.</p>
+<p>Relay solves these problems by acting as an intermediary server, providing secure and simplified connectivity between clients. It eliminates the need for dedicated servers and reduces development overhead. With Relay, just generate a join code and your players can connect right away.</p>
+<p><img src="_page_78_Picture_15.jpeg" alt=""></p>
+<p>After connection, Relay provides a join code.</p>
+<p>See this <a href="https://docs.unity.com/ugs/manual/relay/manual/get-started">Getting starting guide to Unity Relay</a> for more information.</p>
+<h1 id="-span-id-page-79-0-span-multiplay-hosting"><span id="page-79-0"></span>Multiplay Hosting</h1>
+<p><a href="https://docs.unity.com/ugs/en-us/manual/game-server-hosting/manual/welcome">Multiplay Hosting</a> removes the complexity of running and operating infrastructure at scale, so your development team can focus on creating engaging player experiences. It also provides ways for you to:</p>
+<ul>
+<li>Track server health and other <a href="https://docs.unity.com/ugs/en-us/manual/game-server-hosting/manual/concepts/server-analytics">analytic data.</a></li>
+<li>Update servers with <a href="https://docs.unity.com/ugs/en-us/manual/game-server-hosting/manual/concepts/zero-downtime-releases">zero downtime patching</a>.</li>
+<li>Place players in servers that offers the best experience based on <a href="https://docs.unity.com/ugs/en-us/manual/game-server-hosting/manual/concepts/query-protocols">quality of service</a>  <a href="https://docs.unity.com/ugs/en-us/manual/game-server-hosting/manual/concepts/query-protocols">(QoS) data</a>.</li>
+<li><a href="https://docs.unity.com/ugs/en-us/manual/game-server-hosting/manual/concepts/container-builds">Containerize your builds</a> using Docker and the Multiplay Hosting container registry.</li>
+</ul>
+<h2 id="vivox">Vivox</h2>
+<p><a href="https://docs.unity.com/vivox/Article.html">Vivox</a> enables better cooperative and competitive multiplayer experiences by letting your players talk through in-game voice or text chat. Vivox allows you to integrate text and voice chat into your service with a managed hosted solution. While also providing accessibility and regulatory features such as speech-to-text, chat filtering, and more.</p>
+<p>Vivox allows player communication across multiple platforms, whether your game is built in Unreal, Unity, or a custom engine.</p>
+<p>Plug into your game and configure your project settings to add communications to your project from the Unity Dashboard. Connect an unlimited number of users in 2D and 3D channels. Allow users to control voice volume, perform mute actions, and manage their channels.</p>
+<p>See <a href="https://unity.com/resources/megacity-metro?isGated=false">this GDC session</a> that explains how a number of multiplayer services were integrated into the Megacity Metro demo.</p>
+<h1 id="-span-id-page-80-0-span-sample-projects-and-resources"><span id="page-80-0"></span>Sample projects and resources</h1>
+<p>Unity offers a variety of sample projects designed to help you get started with Netcode for GameObjects and Netcode for Entities. These resources provide practical examples to guide you through implementing multiplayer networking in your own applications.</p>
+<h1 id="resources-for-netcode-for-gameobjects">Resources for Netcode for GameObjects</h1>
+<h3 id="-unity-learn-get-started-with-netcode-for-gameobjects-"><strong>Unity Learn: Get started with Netcode for GameObjects</strong></h3>
+<p><a href="https://learn.unity.com/tutorial/get-started-with-netcode-for-gameobjects#">This Unity Learn tutorial</a> provides practical steps on building and testing a basic multiplayer game in Unity, as well as utilizing and testing Remote Procedure Calls (RPCs) and Network Variables. You&#39;ll also learn how to create a simple user interface for different modes (Host, Client, and Server) and add and control basic movements in these modes.</p>
+<p><img src="_page_81_Picture_0.jpeg" alt=""></p>
+<p><img src="_page_81_Figure_1.jpeg" alt=""></p>
+<p>A screenshot from the Unity Learn tutorial on Netcode GameObjects</p>
+<p><span id="page-82-0"></span><img src="_page_82_Picture_0.jpeg" alt=""></p>
+<h3 id="-bitesize-samples-"><strong>Bitesize samples</strong></h3>
+<p>The <a href="https://github.com/Unity-Technologies/com.unity.multiplayer.samples.bitesize?tab=readme-ov-file">Bitesize Samples repository</a> provides a series of sample code as modules to use in your games and better understand Netcode for GameObjects. The repository includes:</p>
+<p>— <a href="https://github.com/Unity-Technologies/com.unity.multiplayer.samples.bitesize/tree/main/Basic/2DSpaceShooter">2D Space Shooter Sample</a>: Learn more about physics movement and status effects using Netcode NetworkVariables and object pooling.</p>
+<p><img src="_page_82_Picture_5.jpeg" alt=""></p>
+<p>The 2D Space Shooter from the Bitesize Samples</p>
+<ul>
+<li><a href="https://github.com/Unity-Technologies/com.unity.multiplayer.samples.bitesize/tree/main/Basic/DistributedAuthoritySocialHub">Distributed Authority Social Hub:</a> Learn how to set up this topology where control and management of the game state are distributed among multiple clients, reducing server load.</li>
+<li><a href="https://github.com/Unity-Technologies/com.unity.multiplayer.samples.bitesize/tree/main/Basic/MultiplayerUseCases">Multiplayer Use Cases Overview</a>: This sample shows you how to perform common actions in a multiplayer environment, so that you can build the features of your game with them in mind.</li>
+<li><a href="https://github.com/Unity-Technologies/com.unity.multiplayer.samples.bitesize/tree/main/Basic/ClientDriven">Client Driven Sample:</a> Learn more about client-driven movements, networked physics, spawning vs statically placed objects, and object reparenting.</li>
+<li><a href="https://github.com/Unity-Technologies/com.unity.multiplayer.samples.bitesize/tree/main/Basic/DynamicAddressablesNetworkPrefabs">Dynamic Addressables Network Prefabs</a>: Learn more about the dynamic prefab system, which allows us to add new spawnable prefabs at runtime.</li>
+</ul>
+<p><span id="page-83-0"></span><img src="_page_83_Picture_0.jpeg" alt=""></p>
+<h4 id="-boss-room-"><strong>Boss Room</strong></h4>
+<p><a href="https://docs-multiplayer.unity3d.com/netcode/current/learn/bossroom/bossroom/">Boss Room</a> is a 3D casual co-op game sample project built with Netcode for GameObjects that is designed to help you explore the concepts and patterns behind a multiplayer game flow.</p>
+<p><img src="_page_83_Picture_4.jpeg" alt=""></p>
+<p>Boss Room is a slice of a full-featured co-op multiplayer game.</p>
+<p>Both a functional game sample and learning tool for developers interested in networked multiplayer games, Boss Room is Unity&#39;s longest running production-ready multiplayer sample built with the Netcode for GameObjects workflows. This sample includes production-level code and is integrated with our Lobby and Relay hosting services.</p>
+<p>Boss Room demonstrates game mechanics for network play, including character abilities and special attacks, networked physics, and state tracking (e.g., breakable objects, switches, and doors). These techniques demonstrate how to hide latency and create smooth gameplay even under less than ideal network conditions. Let&#39;s take a closer look.</p>
+<p><strong>Game flow and state management:</strong> Boss Room includes a practical implementation of game state, covering both the lobby and in-game play. It demonstrates how to handle player connections, load and unload scenes for network play, and manage graceful disconnections.</p>
+<p><strong>Integration with UGS:</strong> Boss Room integrates several UGS features, including Relay, Lobby, and Authentication.</p>
+<p><strong>Utility scripts and tools:</strong> The repo also contains a variety of utility scripts and tools that can be adapted for use in other projects, including examples of client authority, scene management utilities, and networked object pooling.</p>
+<p><span id="page-84-0"></span><strong>Client-server model:</strong> Boss Room uses a client-server model where one of the players acts as the host (server) and other players are clients. Centralizing game logic reduces the chances of cheating and ensures that the game state is consistent across all clients.</p>
+<p><img src="_page_84_Picture_2.jpeg" alt=""></p>
+<p>The start menu in the Boss Room sample project</p>
+<p>For a deep dive into the project, be sure to check out this <a href="https://blog.unity.com/games/build-a-production-ready-multiplayer-game-with-netcode-for-gameobjects">blog post</a> and this four-part <a href="https://www.youtube.com/playlist?list=PLX2vGYjWbI0SbdD3ABTPKneNdG1Lm9v7N">YouTube</a>  <a href="https://www.youtube.com/playlist?list=PLX2vGYjWbI0SbdD3ABTPKneNdG1Lm9v7N">webinar,</a> &quot;Build a production-ready multiplayer game with Netcode for GameObjects.&quot;</p>
+<p>The series covers foundational game mechanics and server authority, including how to implement networked gameplay and object spawning. It also demonstrates how to enhance game resilience to player actions and optimize for better bandwidth management. This resource is for developers looking for practical, hands-on guidance using a full-featured multiplayer project.</p>
+<h4 id="-small-scale-competitive-multiplayer-template-"><strong>Small Scale Competitive Multiplayer template</strong></h4>
+<p>Available from the Unity Hub, this template provides a starting point to create and ship your multiplayer project using <a href="https://github.com/Unity-Technologies/com.unity.netcode.gameobjects">Netcode For GameObjects</a> and <a href="https://unity.com/solutions/gaming-services">UGS</a>.</p>
+<p>The template includes a Bootstrapper tool that helps you test using various network modes (Host, Client, Server) and dynamic configurations.</p>
+<p><img src="_page_85_Picture_0.jpeg" alt=""></p>
+<p>To get started open the project and follow the instructions in the included welcome dialog. Follow the in-editor tutorials or explore on your own and load the start scene from the <strong>Multiplayer &gt; Bootstrapper</strong> menu item. Adjust the value of each field of the Bootstrapper according to what you want to test and enter Play mode.</p>
+<p><img src="_page_85_Picture_2.jpeg" alt=""></p>
+<p>Set the Bootstrapper options.</p>
+<p>Remember that you can access tutorials and useful resources at any time from the <strong>Tutorials &gt; Show tutorials</strong> menu.</p>
+<p><span id="page-86-0"></span><img src="_page_86_Picture_0.jpeg" alt=""></p>
+<h3 id="-vr-multiplayer-template-"><strong>VR Multiplayer template</strong></h3>
+<table>
+<thead>
+<tr>
+<th>000</th>
+<th>New Project</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td>Editor Version: Unity 2023.X.XX LTs ◇</td>
+<td></td>
+</tr>
+<tr>
+<td>Q<br>Search</td>
+<td>VR Multiplayer</td>
+<td></td>
+</tr>
+<tr>
+<td>=<br>All Templates</td>
+<td>Template</td>
+<td></td>
+</tr>
+<tr>
+<td>0<br>Core<br>. I<br>Sample</td>
+<td>2D Mobile<br>Template</td>
+<td></td>
+</tr>
+<tr>
+<td>S Learning</td>
+<td>3D<br>0<br>Template</td>
+<td>VR Multiplayer<br>Quickstart your Virtual Reality (VR)<br>Multiplayer applications with a sample scene,<br>assets, and the recommended packages<br>Read more</td>
+</tr>
+<tr>
+<td></td>
+<td>20<br>0<br>Template</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>Universal<br>SRP<br>Template</td>
+<td>PROJECT SETTINGS<br>Project Name</td>
+</tr>
+<tr>
+<td></td>
+<td>High Definition<br>SRP<br>Template</td>
+<td>My Project<br>Location<br>/Unity/My Project</td>
+</tr>
+<tr>
+<td></td>
+<td>AR<br>30<br>Template</td>
+<td>Unity Cloud Organization<br>V<br>Organization-Name</td>
+</tr>
+<tr>
+<td></td>
+<td>VR<br>Template</td>
+<td>Connect to Unity Cloud @ HEW<br>Use Unity Version Control 17 HEW</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Create Project<br>Cancel</td>
+</tr>
+</tbody>
+</table>
+<p>Open the VR Multiplayer template from the Unity Hub.</p>
+<p>The <a href="https://discussions.unity.com/t/new-vr-multiplayer-template-available/1488824">VR Multiplayer template</a> is is designed for creators starting a new project that will target an OpenXR device. It provides everything you need for networked interactions, voice chat, lobbies, and more. It leverages Unity Gaming Services, Netcode For GameObjects and the XR Interaction Toolkit and is built to work well on the Meta Quest platform as well as other OpenXR compliant devices. The key features of the VR Multiplayer template include:</p>
+<ul>
+<li>Networked Interactions via XRI Interaction Toolkit and Netcode for GameObjects</li>
+<li>Voice Communication via Vivox</li>
+<li>Connect to anyone, anywhere with Relay and Lobby</li>
+<li>Networked Avatars and Hands</li>
+<li>Works cross platform via OpenXR</li>
+</ul>
+<p>Download the Unity VR Multiplayer Template for Unity 2022 LTS and Unity 6 Preview from the Unity Hub and check out the <a href="https://docs.unity3d.com/Packages/com.unity.template.vr-multiplayer@2.0/manual/index.html">quickstart guide</a>.</p>
+<p><span id="page-87-0"></span><img src="_page_87_Picture_0.jpeg" alt=""></p>
+<h1 id="resources-for-netcode-for-entities">Resources for Netcode for Entities</h1>
+<h4 id="-getting-started-with-netcode-for-entities-"><strong>Getting started with Netcode for Entities</strong></h4>
+<p>This <a href="https://unity.com/resources/getting-started-with-netcode-for-entities?isGated=false">on-demand webinar</a> takes a deep dive into Megacity Metro, Unity&#39;s large-scale, crossplatform multiplayer game sample made with Netcode for Entities and Unity Gaming Services. The webinar is for users who are already familiar with DOTS and want to start creating ambitious multiplayer games.</p>
+<h4 id="-ecs-netcode-samples-"><strong>ECS Netcode samples</strong></h4>
+<p><a href="https://github.com/Unity-Technologies/EntityComponentSystemSamples">These samples</a> demonstrate many basic and advanced features, including syncing, connection flows, integration with Unity Physics, and more. Start with the <a href="https://docs.unity3d.com/Packages/com.unity.netcode@1.2/manual/networked-cube.html">Networked Cube tutorial,</a> which covers:</p>
+<ul>
+<li>Establishing a connection with the server.</li>
+<li>Communicating with the server.</li>
+<li>Spawning synchronized entities on the server.</li>
+<li>Creating standalone builds of the server and client.</li>
+<li>Running the server and a client in Play mode within the Editor.</li>
+</ul>
+<p><img src="_page_87_Picture_12.jpeg" alt=""></p>
+<p>The Networked Cube tutorial running in the Editor and as a standalone build</p>
+<p><span id="page-88-0"></span><img src="_page_88_Picture_0.jpeg" alt=""></p>
+<h4 id="-ecs-network-racing-"><strong>ECS Network Racing</strong></h4>
+<p>This <a href="https://github.com/Unity-Technologies/ECS-Network-Racing-Sample">multiplayer racing game sample</a> showcases best practices for using Unity Netcode for Entities. This demo features an implementation of client-server architecture with client-side prediction, interpolation, and lag compensation.</p>
+<p><img src="_page_88_Picture_4.jpeg" alt=""></p>
+<p>ECS Racing showcases advanced multiplayer features.</p>
+<h4 id="-megacity-metro-"><strong>Megacity Metro</strong></h4>
+<p><a href="https://unity.com/demos/megacity-competitive-action-sample">Megacity Metro</a> (Unity 6, Unity 2022 LTS) is a scalable, high-concurrency, cross-platform demo of our latest technology, including the Netcode for Entities package. This third-person multiplayer action demo supports 128+ players.</p>
+<p>The multiplayer sample is perfect for those who want to master implementing serverauthoritative gameplay and leveraging UGS for an end-to-end multiplayer game.</p>
+<p><img src="_page_88_Picture_9.jpeg" alt=""></p>
+<p>The Megacity Metro demo from Unity supports 128+ players.</p>
+<p><span id="page-89-0"></span><img src="_page_89_Picture_0.jpeg" alt=""></p>
+<p>Learn more about building ambitious games using ECS for Unity and our Multiplayer solutions. ECS for Unity brings value to seasoned Unity creators who need additional control and determinism to achieve more ambitious games.</p>
+<p>Megacity Metro features advanced mechanics like interpolation, client-side prediction and lag compensation. Download the demo to explore services like Multiplay Hosting, Matchmaker, and Vivox Voice Chat.</p>
+<p><img src="_page_89_Picture_4.jpeg" alt=""></p>
+<p>Megacity Metro uses Netcode for Entities in a multiplayer action demo.</p>
+<h2 id="experimental-multiplayer-services-package">Experimental Multiplayer Services package</h2>
+<p>Building a multiplayer game requires integrating several products and services together. With the new <strong>Multiplayer Services</strong> package (<strong>com.unity.services.multiplayer</strong>), we&#39;re simplifying integration and dependencies management across multiplayer services while offering a new way to interact with the products.</p>
+<p>The Multiplayer Services package is a one-stop solution for adding online multiplayer elements to a game. Powered by UGS, it combines capabilities from services such as Relay and Lobby into a single new &quot;Sessions&quot; system to help you quickly define how groups of players connect together.</p>
+<p>The Multiplayer Services package enables you to create peer-to-peer (P2P) sessions while providing multiple methods for players to join those sessions, such as by a join code, by browsing a list of active sessions, and &quot;Quick Join.&quot;</p>
+<h1 id="-span-id-page-90-0-span-next-steps"><span id="page-90-0"></span>Next steps</h1>
+<p>Now that you have a solid foundation in networking concepts and practical experience with Netcode for GameObjects, continue your multiplayer learning journey:</p>
+<p><strong>Dive into Unity Learn:</strong> We&#39;re simplifying the multiplayer learning curve even further with new guided content. On Unity Learn, our first <a href="https://learn.unity.com/tutorial/get-started-with-netcode-for-gameobjects#">Multiplayer Course</a> will teach you the basics of Netcode for GameObjects and guide you through your first networked project.</p>
+<p><strong>Explore the sample projects:</strong> Dive deeper into the sample projects, such as Boss Room, Galactic Kittens, and the Bitesize Samples. Modding these projects will expose you to new techniques and help discover the best practices when working with networked multiplayer.</p>
+<p><strong>Experiment with multiplayer services:</strong> Remember there&#39;s no need to reinvent the wheel. Relay, Lobby, and Matchmaker are ready to deploy into your projects. These services can significantly reduce development time.</p>
+<p><strong>Master advanced techniques:</strong> As your project&#39;s needs grow, consider Netcode for Entities. This advanced package includes techniques like client-side prediction and lag compensation for the highest networking performance. The Megacity Metro and ECS Racing samples showcase these features in action.</p>
+<p>Happy networking.</p>
+<p><img src="_page_91_Picture_0.jpeg" alt=""></p>
+<p><a href="https://unity.com">unity.com</a></p>
+</body></html>
